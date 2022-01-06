@@ -1,0 +1,41 @@
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useContext } from 'react';
+import { SignInContext } from '../Context/authContext';
+import MainNavigation from './MainNavigation';
+import LoginScreen from '../Screens/LoginScreen';
+import { createStackNavigator } from '@react-navigation/stack';
+import AuthStackScreen from './AuthStacks';
+
+const MainStack = createStackNavigator();
+export default function Main() {
+  const { signedIn } = useContext(SignInContext);
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator initialRouteName="LoginScreen">
+        <MainStack.Screen
+          name="LoginScreen"
+          component={AuthStackScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <MainStack.Screen
+          name="MainScreen"
+          component={MainNavigation}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+});

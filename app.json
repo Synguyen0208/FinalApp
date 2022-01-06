@@ -1,14 +1,17 @@
 {
   "expo": {
-    "name": "FinalApp",
-    "slug": "FinalApp",
+    "name": "KindicareApp",
+    "slug": "KindicareApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "marginLeft":"20%",
+      "marginRight":"20%",
+      "with":"60%"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
