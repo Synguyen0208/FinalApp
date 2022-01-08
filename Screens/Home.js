@@ -2,11 +2,6 @@ import { View, StatusBar, StyleSheet, Text, ScrollView } from 'react-native';
 function Home({ navigation, route }) {
   return (
     <View style={styles.container}>
-      <StatusBar
-        translucent
-        barStyle="light-content"
-        backgroundColor="#FF0000"
-      />
       <ScrollView>
         <Text>Home Screen</Text>
         <Text style={{ color: 'red' }}>{route?.params?.email}</Text>

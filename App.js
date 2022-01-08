@@ -2,10 +2,16 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { SignInContextProvider } from './Context/authContext';
 import Main from './Navigations/Main';
+import { StatusBar } from 'react-native';
 
 export default function App() {
   return (
     <SignInContextProvider>
+      <StatusBar
+        translucent
+        barStyle="light-content"
+        backgroundColor="#DB147F"
+      />
       <Main />
     </SignInContextProvider>
   );

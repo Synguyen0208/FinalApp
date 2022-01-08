@@ -6,6 +6,7 @@ import MainNavigation from './MainNavigation';
 import LoginScreen from '../Screens/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthStackScreen from './AuthStacks';
+import HomeTab from './HomeTab';
 
 const MainStack = createStackNavigator();
 export default function Main() {
@@ -13,16 +14,16 @@ export default function Main() {
   return (
     <NavigationContainer>
       <MainStack.Navigator initialRouteName="LoginScreen">
-        <MainStack.Screen
+        {/* <MainStack.Screen
           name="LoginScreen"
           component={AuthStackScreen}
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
         <MainStack.Screen
           name="MainScreen"
-          component={MainNavigation}
+          component={HomeTab}
           options={{
             headerShown: false,
           }}
