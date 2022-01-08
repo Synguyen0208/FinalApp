@@ -1,20 +1,79 @@
+import { useEffect, useState } from 'react';
+import { Switch } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { View, StyleSheet, Text } from 'react-native';
+import { ProfileScreenData } from './ScreenData';
+import { colors } from '../global/styles';
+import { ScrollView } from 'react-native';
 function Profile({ navigation, route }) {
   return (
     <View style={styles.container}>
-      <View style={styles.contain}>
-        <View style={styles.row}>
-          <Text style={styles.title}>Name: </Text>
-          <Text style={styles.value}>Nguyen Van Sy</Text>
+      <ScrollView>
+        <View style={styles.tab}>
+          {ProfileScreenData.firstTab.map((e, index) => {
+            const { name, right } = e;
+            return (
+              <View
+                style={[
+                  styles.row,
+                  index !== ProfileScreenData.firstTab.length - 1
+                    ? styles.m2
+                    : null,
+                ]}
+              >
+                <Text>{name}</Text>
+                <Text style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
+                  {right !== undefined ? (
+                    right
+                  ) : (
+                    <FontAwesome
+                      name="long-arrow-right"
+                      size={20}
+                      color={colors.grey2}
+                      style={{ padding: 10 }}
+                    />
+                  )}
+                </Text>
+              </View>
+            );
+          })}
         </View>
-        <View style={styles.row}>
-          <Text style={styles.title}>Email: </Text>
-          <Text style={styles.value}>{route?.params?.email}</Text>
+        <View style={styles.tab}>
+          {ProfileScreenData.canterTab.map((e, index) => {
+            const { name, right } = e;
+            return (
+              <View
+                style={[
+                  styles.row,
+                  index !== ProfileScreenData.canterTab.length - 1
+                    ? styles.m2
+                    : null,
+                ]}
+              >
+                <Text>{name}</Text>
+                <Text style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={colors.grey2}
+                    style={{ padding: 10 }}
+                  />
+                </Text>
+              </View>
+            );
+          })}
         </View>
-        <View style={styles.row}>
-          <Text style={styles.title}>Password: </Text>
-          <Text style={styles.value}>{route?.params?.password}</Text>
-        </View>
+      </ScrollView>
+      <View style={[styles.row, { padding: 20, backgroundColor: 'white' }]}>
+        <Text>Logout</Text>
+        <Text style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
+          <FontAwesome
+            name="sign-out"
+            size={20}
+            color={colors.grey2}
+            style={{ padding: 10 }}
+          />
+        </Text>
       </View>
     </View>
   );
@@ -24,7 +83,6 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
     backgroundColor: '#bdc6cf',
   },
   contain: {
@@ -32,19 +90,16 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginRight: '5%',
   },
+  m2: {
+    marginBottom: 20,
+  },
   row: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    marginTop: 20,
-    marginBottom: 20,
+    alignItems: 'center',
+  },
+  tab: {
+    backgroundColor: 'white',
     padding: 20,
-  },
-  title: {
-    fontSize: 17,
-  },
-  value: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 40,
+    marginBottom: 10,
   },
 });
