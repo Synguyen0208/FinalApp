@@ -14,9 +14,6 @@ export default function CentresHeader(props) {
         <View style={[styles.row1]}>
           <FontAwesome5
             style={{ padding: 10 }}
-            onPress={() => {
-              setModalVisible(true);
-            }}
             name="store"
             size={20}
             color={'white'}
@@ -36,9 +33,6 @@ export default function CentresHeader(props) {
                 </View>
                 <FontAwesome
                   style={{ padding: 10 }}
-                  onPress={() => {
-                    setModalVisible(true);
-                  }}
                   name="angle-down"
                   size={30}
                   color="white"

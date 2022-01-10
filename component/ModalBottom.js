@@ -6,7 +6,15 @@ import { Text } from 'react-native-elements';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import Btn from './Button';
 export default function ModalBottom(props) {
-  const { setModalVisible, modalVisible, children } = props;
+  const {
+    setModalVisible,
+    modalVisible,
+    children,
+    title,
+    closeIcon,
+    height,
+    closeRightIcon,
+  } = props;
   return (
     <Modal
       animationType="slide"
@@ -18,20 +26,29 @@ export default function ModalBottom(props) {
         <TouchableNativeFeedback onPress={() => setModalVisible(false)}>
           <View style={{ flex: 1, width: '100%' }} />
         </TouchableNativeFeedback>
-        <View style={styles.modalView}>
+        <View style={[styles.modalView, { height: height }]}>
           <View style={styles.modalContainer}>
             <View style={styles.row}>
-              <Btn
-                text="X"
-                textStyle={{ fontSize: 30 }}
-                onPress={() => setModalVisible(false)}
-              />
-              <Text style={styles.title}>Select centre</Text>
+              {closeIcon && (
+                <Btn
+                  text="x"
+                  textStyle={{ fontSize: 20 }}
+                  onPress={() => setModalVisible(false)}
+                />
+              )}
+
+              <Text style={styles.title}>{title}</Text>
+              {closeRightIcon && (
+                <Btn
+                  text="x"
+                  textStyle={{ fontSize: 30 }}
+                  onPress={() => setModalVisible(false)}
+                />
+              )}
             </View>
             <Divider
               style={{
                 width: '100%',
-                marginTop: 10,
                 marginBottom: 20,
                 height: 10,
               }}
@@ -65,7 +82,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    height: 629,
   },
   row: {
     flexDirection: 'row',

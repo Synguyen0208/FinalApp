@@ -3,7 +3,6 @@ import { Dimensions, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ModalBottom from '../component/ModalBottom';
 import { View, StyleSheet, Text } from 'react-native';
-import CardPro from '../component/CardJob';
 import React from 'react';
 import { colors } from '../global/styles';
 import * as yup from 'yup';
@@ -15,6 +14,8 @@ import CentresHeader from '../component/CentresHeader';
 import Searchbar from '../component/SearchBar';
 import CardCentre from '../component/CardCentre';
 import CardTotal from '../component/CardTotal';
+import { TouchableNativeFeedback } from 'react-native';
+import Line from '../component/Line';
 function CentreScreen({ navigation, route }) {
   const [value, setValue] = useState();
   const [visible, setVisible] = useState(false);
@@ -27,6 +28,7 @@ function CentreScreen({ navigation, route }) {
     setVisible(false);
   }, [navigation]);
   return (
+    // <ScrollView>
     <View style={styles.container}>
       <AnimatedLoader
         visible={visible}
@@ -52,55 +54,128 @@ function CentreScreen({ navigation, route }) {
           <CardTotal title="Total centres" icon="store" number={200} />
         </ScrollView>
       </View>
-      <View style={styles.contain}>
-        <View style={styles.row}>
-          <Searchbar
-            value={value}
-            updateSearch={updateSearch}
-            textSearch="Search Centre name"
-            style={{
-              flex: 2,
-              marginRight: 10,
-              // justifyContent: 'center',
-            }}
-          />
+      <View style={[styles.row, styles.contain]}>
+        <Searchbar
+          value={value}
+          updateSearch={updateSearch}
+          textSearch="Search Centre name"
+          style={{
+            flex: 2,
+            marginRight: 10,
+            // justifyContent: 'center',
+          }}
+        />
 
-          <View
+        <View
+          style={{
+            backgroundColor: 'white',
+            height: 50,
+            width: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 6,
+          }}
+        >
+          <Image
             style={{
-              backgroundColor: 'white',
-              height: 50,
-              width: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 6,
+              width: 30,
             }}
-          >
-            <Image
-              style={{
-                width: 30,
-              }}
-              source={require('../assets/ic-filter.png')}
-            />
-          </View>
-        </View>
-        <View style={{ width: '100%' }}>
-          <CardCentre
-            data={{
-              image:
-                'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
-              name: 'Castle Hill Montessori Academy',
-              location: '1 Kerrs Road, Castle Hill, NSW 2154',
-              waitlist: '48 waitlisted',
-              type: 'KindiCare Basic',
-              service: '4 services',
-              children: '90 childrens',
-            }}
+            source={require('../assets/ic-filter.png')}
           />
         </View>
       </View>
+      <Line height={5} />
+      <ScrollView contentContainerStyle={styles.contain}>
+        <TouchableNativeFeedback
+          onPress={() => {
+            navigation.navigate('CentreDetail');
+          }}
+        >
+          <View style={{ width: '100%' }}>
+            <CardCentre
+              data={{
+                image:
+                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
+                name: 'Castle Hill Montessori Academyq',
+                location: '1 Kerrs Road, Castle Hill, NSW 2154',
+                waitlist: '48 waitlisted',
+                type: 'KindiCare Basic',
+                service: '4 services',
+                children: '90 childrens',
+              }}
+            />
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => {
+            navigation.navigate('CentreDetail');
+          }}
+        >
+          <View style={{ width: '100%' }}>
+            <CardCentre
+              data={{
+                image:
+                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
+                name: 'Castle Hill Montessori Academyq',
+                location: '1 Kerrs Road, Castle Hill, NSW 2154',
+                waitlist: '48 waitlisted',
+                type: 'KindiCare Basic',
+                service: '4 services',
+                children: '90 childrens',
+              }}
+            />
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => {
+            navigation.navigate('CentreDetail');
+          }}
+        >
+          <View style={{ width: '100%' }}>
+            <CardCentre
+              data={{
+                image:
+                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
+                name: 'Castle Hill Montessori Academyq',
+                location: '1 Kerrs Road, Castle Hill, NSW 2154',
+                waitlist: '48 waitlisted',
+                type: 'KindiCare Basic',
+                service: '4 services',
+                children: '90 childrens',
+              }}
+            />
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => {
+            navigation.navigate('CentreDetail');
+          }}
+        >
+          <View style={{ width: '100%' }}>
+            <CardCentre
+              data={{
+                image:
+                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
+                name: 'Castle Hill Montessori Academy',
+                location: '1 Kerrs Road, Castle Hill, NSW 2154',
+                waitlist: '48 waitlisted',
+                type: 'KindiCare Basic',
+                service: '4 services',
+                children: '90 childrens',
+              }}
+            />
+          </View>
+        </TouchableNativeFeedback>
+      </ScrollView>
       <ModalBottom
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
+        title="Select Centres"
+        closeIcon={true}
+        height={629}
       >
         <Searchbar
           style={{
@@ -139,6 +214,7 @@ function CentreScreen({ navigation, route }) {
         </ScrollView>
       </ModalBottom>
     </View>
+    // </ScrollView>
   );
 }
 
@@ -231,6 +307,7 @@ const styles = StyleSheet.create({
   },
   contain: {
     width: '94%',
+    paddingBottom: 10,
   },
   line: {
     marginTop: 30,
