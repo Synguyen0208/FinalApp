@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { colors } from '../global/styles';
 import { Icon } from 'react-native-elements';
 import Plant from '../Screens/Plant';
 import { Text } from 'react-native';
 import HomeStackScreen from './HomeStacks';
-import SiteEventStack from './SiteEventStack';
 import LinkScreen from '../Screens/LinkScreen';
 import ContactScreen from '../Screens/Contact';
+import CentreStack from './CentreStack';
 
 const HomeTabs = createBottomTabNavigator();
 
@@ -73,8 +73,8 @@ const HomeTab = ({ route }) => {
         }}
       />
       <HomeTabs.Screen
-        name="SiteEventScreen"
-        component={SiteEventStack}
+        name="CentreScreen"
+        component={CentreStack}
         options={{
           headerShown: false,
           tabBarLabel: ({ color, size, focused }) => (
@@ -85,14 +85,14 @@ const HomeTab = ({ route }) => {
                 fontWeight: focused ? 'bold' : 'normal',
               }}
             >
-              Site Event
+              Centres
             </Text>
           ),
           tabBarIcon: ({ color, size, focused }) => (
-            <FontAwesome
-              name="calendar-plus-o"
+            <FontAwesome5
+              name="store"
               size={size}
-              color={focused ? '#FF0000' : colors.grey2}
+              color={focused ? '#DB147F' : colors.grey2}
             />
           ),
         }}
