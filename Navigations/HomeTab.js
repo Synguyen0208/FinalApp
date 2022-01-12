@@ -10,6 +10,9 @@ import HomeStackScreen from './HomeStacks';
 import LinkScreen from '../Screens/LinkScreen';
 import ContactScreen from '../Screens/Contact';
 import CentreStack from './CentreStack';
+import ContactScreen from '../Screens/MoreScreen';
+import MoreScreen from '../Screens/MoreScreen';
+import MoreStack from './MoreStack';
 
 const HomeTabs = createBottomTabNavigator();
 
@@ -123,10 +126,14 @@ const HomeTab = ({ route }) => {
         }}
       />
       <HomeTabs.Screen
-        name="ContactScreen"
-        component={ContactScreen}
+        name="MoreScreen"
+        component={MoreStack}
         options={{
-          headerShown: false,
+          headerTitle: 'More',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            borderBottomWidth: 1,
+          },
           tabBarLabel: ({ color, size, focused }) => (
             <Text
               style={{
@@ -135,12 +142,12 @@ const HomeTab = ({ route }) => {
                 fontWeight: focused ? 'bold' : 'normal',
               }}
             >
-              Contact
+              More
             </Text>
           ),
           tabBarIcon: ({ color, size, focused }) => (
             <FontAwesome
-              name="phone"
+              name="ellipsis-h"
               size={size}
               color={focused ? '#FF0000' : colors.grey2}
             />
