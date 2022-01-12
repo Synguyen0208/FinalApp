@@ -1,20 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { Image, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
 import image from '../assets/logo.png';
 import Btn from '../component/Button';
-import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { useState, useContext } from 'react';
 import { SignInContext } from '../Context/authContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import AnimatedLoader from 'react-native-animated-loader';
 import { auth } from '../firebase';
 import { ScrollView } from 'react-native';
+import { AntDesign,Feather } from '@expo/vector-icons';
 
+import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function LoginScreen({ navigation }) {
   const [visible, setVisible] = useState(false);
   const { dispatchSignedIn } = useContext(SignInContext);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [hidenpassword, setHidenPassword] = useState(true);
 
   const onSubmit = async () => {
     setVisible(true);
@@ -53,52 +55,42 @@ export default function LoginScreen({ navigation }) {
       >
         <View style={styles.content}>
           <View style={{ alignItems: 'center' }}>
-            <Image style={styles.logo} source={image} />
+              <View style={styles.checkView}>
+                  
+                  <AntDesign name="checkcircle" size={40} color="#27C754" />
+              </View>
           </View>
-          <Text style={{ fontSize: 15, marginBottom: 5 }}>
-            Acciona Account Users (eg.@acciona, @colemanrail etc.) Sign in with
-            your corporate ID
-          </Text>
-          <Btn
-            text="AccionaCorporateLogin"
-            textStyle={styles.textStyle}
-            onPress={onSubmit}
-            style={styles.btn}
-          />
+        
+        
           <View style={styles.divider}>
-            <Divider style={{ width: '43%' }} />
-            <Text style={{ marginLeft: 10, marginRight: 10, fontSize: 15 }}>
-              OR
-            </Text>
-            <Divider style={{ width: '43%' }} />
+            
           </View>
-          <Text
-            style={{
-              fontSize: 15,
-              marginBottom: 5,
-              textAlign: 'left',
-            }}
-          >
-            All Others Users {'>'} Use the Login form below
-          </Text>
           <View style={styles.form}>
             <View style={styles.input}>
-              <Text>Email</Text>
+              <Text   style={styles.textInputTitle}>  Email</Text>
               <TextInput
                 style={styles.textInput}
                 value={email}
+                autoCapitalize={false}
                 onChangeText={setEmail}
-                placeholder="  name@host.com"
+                placeholder=" Enter your email"
               />
             </View>
             <View style={styles.input}>
-              <Text>Password</Text>
-              <TextInput
-                style={styles.textInput}
-                value={password}
-                onChangeText={setPassword}
-                placeholder="  Password"
-              />
+              <Text>  Password</Text>
+              <View style={styles.inputPass}>
+                <TextInput
+                  style={styles.textInput}
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={hidenpassword ? true:false}
+                  placeholder=" Enter your password"
+                />
+                <TouchableOpacity onPress={()=>setHidenPassword(!hidenpassword)}>
+                  {hidenpassword?<Feather name="eye-off" size={20} color="black" />:<Feather name="eye" size={20} color="black" />}
+                </TouchableOpacity>
+              </View>
+              
             </View>
           </View>
           <View
@@ -107,7 +99,11 @@ export default function LoginScreen({ navigation }) {
               marginTop: 10,
             }}
           >
-            <Text style={{ textAlign: 'right' }}>Forgot Your Password?</Text>
+          <TouchableOpacity onPress={()=>navigation.navigate('ForgotScreen')}> 
+          <Text style={styles.textForgor}>
+            Forgot password?</Text>
+          </TouchableOpacity>
+         
           </View>
           <Btn
             text="Login"
@@ -116,40 +112,15 @@ export default function LoginScreen({ navigation }) {
             style={styles.btnLogin}
           />
           <View style={styles.divider}>
-            <Divider style={{ width: '43%' }} />
-            <Text style={{ marginLeft: 10, marginRight: 10, fontSize: 15 }}>
-              OR
-            </Text>
-            <Divider style={{ width: '43%' }} />
+
           </View>
-          <View style={{ alignItems: 'center' }}>
-            <Text
-              onPress={() => navigation.navigate('SignUp')}
-              style={{
-                color: '#38044B',
-                fontWeight: 'bold',
-                fontSize: 17,
-              }}
-            >
-              Don't have an account? Create now!
-            </Text>
-          </View>
+          
           <View style={styles.textFooter}>
+            
             <Text style={styles.txt}>
-              Forgot your password or having trouble signing in?
+              If you have trouble logging in to KindiCare CRM,
             </Text>
-            <Text style={styles.txt}>
-              Contact the Service Desk on:{' '}
-              <Text style={{ color: '#FF0000', fontWeight: 'bold' }}>
-                (03) 9624 4236
-              </Text>
-            </Text>
-            <Text style={styles.txt}>
-              Raise an incident via{' '}
-              <Text style={{ color: '#FF0000', fontWeight: 'bold' }}>
-                Service Now Portal
-              </Text>
-            </Text>
+            <Text style={{color:'#DB147F',marginTop:'1%'}}> please contact our Customer Care team.</Text>
           </View>
         </View>
       </ScrollView>
@@ -169,6 +140,15 @@ const styles = StyleSheet.create({
     height: 150,
     alignContent: 'center',
   },
+  checkView:{
+    backgroundColor:'#92E2A952',
+    height:90,
+    width:90,
+    borderRadius:100,
+    justifyContent:'center',
+    alignItems:'center',
+    marginBottom:'10%'
+  },
   content: {
     width: '90%',
     margin: '5%',
@@ -176,16 +156,12 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#ffffff',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 15,
+    fontWeight:'bold'
   },
-  btn: {
-    backgroundColor: '#EE0000',
-    padding: 10,
-    borderRadius: 10,
-    width: '100%',
-  },
+ 
   btnLogin: {
-    backgroundColor: '#38044B',
+    backgroundColor: '#DB147F',
     padding: 15,
     borderRadius: 10,
     width: '100%',
@@ -199,7 +175,6 @@ const styles = StyleSheet.create({
   textInput: {
     width: '100%',
     padding: 5,
-    borderWidth: 1,
     borderRadius: 5,
   },
   form: {
@@ -207,13 +182,26 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 5,
+    borderWidth:1,
+    borderColor:'#d9d5d4',
+    borderRadius:10,
+    marginBottom:'5%'
+  },
+  inputPass:{
+    flexDirection:'row',
+    width:'90%'
+  },
+  textForgor:{
+   textAlign: 'right',
+   color:'#DB147F'
   },
   textFooter: {
-    marginTop: 10,
+    marginTop:'50%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   txt: {
+    color:'black',
     textAlign: 'center',
     margin: 2,
     fontSize: 15,

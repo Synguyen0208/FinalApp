@@ -7,6 +7,7 @@ import LoginScreen from '../Screens/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthStackScreen from './AuthStacks';
 import HomeTab from './HomeTab';
+import ForgotPasswordScreen from '../Screens/login/ForgorPassword';
 
 const MainStack = createStackNavigator();
 export default function Main() {
@@ -15,6 +16,8 @@ export default function Main() {
     <NavigationContainer>
       <MainStack.Navigator initialRouteName="LoginScreen">
         {/* <MainStack.Screen
+      <MainStack.Navigator initialRouteName="MainScreen">
+        <MainStack.Screen
           name="LoginScreen"
           component={AuthStackScreen}
           options={{
@@ -27,6 +30,11 @@ export default function Main() {
           options={{
             headerShown: false,
           }}
+        />
+        <MainStack.Screen
+          name="ForgotScreen"
+          component={ForgotPasswordScreen}
+          options={{ title: null }}
         />
       </MainStack.Navigator>
     </NavigationContainer>

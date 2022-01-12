@@ -5,14 +5,14 @@ import Requisition from '../Screens/Requisition';
 
 export const routesApp = [
   {
-    name: 'Home',
+    name: 'Dashboard',
     component: HomeTab,
     params: true,
     options: {
       headerShown: false,
       drawerActiveBackgroundColor: 'white',
     },
-    label: 'Home',
+    label: 'Dashboard',
     icon: 'home',
   },
   {
