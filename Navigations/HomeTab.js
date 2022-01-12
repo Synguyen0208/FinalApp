@@ -33,7 +33,7 @@ const HomeTab = ({ route }) => {
                 fontWeight: focused ? 'bold' : 'normal',
               }}
             >
-              Home
+              Dashboard
             </Text>
           ),
           tabBarColor: '#fff',

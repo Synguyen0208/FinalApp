@@ -6,7 +6,7 @@ const Drawer = createDrawerNavigator();
 export default function MainNavigation({ route, navigation }) {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="Dashboard"
       drawerContent={(props) => <DrawerContent {...props} />}
       screenOptions={{
         drawerActiveTintColor: 'red',
