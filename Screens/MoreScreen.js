@@ -7,7 +7,6 @@ import { TouchableNativeFeedback } from 'react-native';
 function MoreScreen({ navigation }) {
   const { signedIn } = useContext(SignInContext);
   const { email } = signedIn.userToken.user;
-  console.log(signedIn.userToken.user);
   return (
     <View style={styles.container}>
       <TouchableNativeFeedback

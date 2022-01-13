@@ -2,8 +2,6 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { SignInContext } from '../Context/authContext';
-import MainNavigation from './MainNavigation';
-import LoginScreen from '../Screens/LoginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthStackScreen from './AuthStacks';
 import HomeTab from './HomeTab';
@@ -15,15 +13,12 @@ export default function Main() {
   return (
     <NavigationContainer>
       <MainStack.Navigator initialRouteName="LoginScreen">
-        {/* <MainStack.Screen
-      <MainStack.Navigator initialRouteName="MainScreen">
         <MainStack.Screen
           name="LoginScreen"
           component={AuthStackScreen}
           options={{
             headerShown: false,
-          }}
-        /> */}
+          }}/>
         <MainStack.Screen
           name="MainScreen"
           component={HomeTab}
@@ -31,6 +26,7 @@ export default function Main() {
             headerShown: false,
           }}
         />
+        
         <MainStack.Screen
           name="ForgotScreen"
           component={ForgotPasswordScreen}

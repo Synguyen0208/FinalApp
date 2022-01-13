@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Switch } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { View, StyleSheet, Text } from 'react-native';
 import { ProfileScreenData } from './ScreenData';
 import { colors } from '../global/styles';
 import { ScrollView } from 'react-native';
-function Profile({ navigation, route }) {
+function Profile() {
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -50,7 +48,7 @@ function Profile({ navigation, route }) {
                     : null,
                 ]}
               >
-                <Text>{name}</Text>
+                <Text style={{width:"70%"}}>{name}</Text>
                 <Text style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
                   <FontAwesome
                     name="long-arrow-right"

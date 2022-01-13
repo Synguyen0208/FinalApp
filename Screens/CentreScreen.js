@@ -4,8 +4,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import ModalBottom from '../component/ModalBottom';
 import { View, StyleSheet, Text } from 'react-native';
 import React from 'react';
-import { colors } from '../global/styles';
-import * as yup from 'yup';
 import { ScrollView } from 'react-native';
 import { getDatabase, ref, onValue, set, remove } from 'firebase/database';
 import { RadioButton } from 'react-native-paper';

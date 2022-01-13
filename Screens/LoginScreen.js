@@ -1,6 +1,5 @@
 
 import { Image, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
-import image from '../assets/logo.png';
 import Btn from '../component/Button';
 import { useState, useContext } from 'react';
 import { SignInContext } from '../Context/authContext';
@@ -25,7 +24,7 @@ export default function LoginScreen({ navigation }) {
       if (user) {
         dispatchSignedIn({
           type: 'UPDATE_SIGN_IN',
-          payload: { userToken: 'signed-in' },
+          payload: { userToken: user },
         });
         setVisible(false);
         navigation.navigate('MainScreen', {

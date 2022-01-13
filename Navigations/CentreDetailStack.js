@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Animated from 'react-native-reanimated';
-import Plant from '../Screens/Plant';
-import Requisition from '../Screens/Requisition';
 import { ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 import { colors } from '../global/styles';

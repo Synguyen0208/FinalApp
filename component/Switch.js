@@ -11,21 +11,6 @@ export default function SW() {
       switchOn={isEnabled}
       onPress={toggleSwitch}
       containerStyle={{
-<<<<<<< HEAD
-        width: 40,
-        height: 20,
-        borderRadius: 25,
-      }}
-      circleStyle={{
-        width: 25,
-        height: 25,
-        borderRadius: 12,
-        backgroundColor: 'white', // rgb(102,134,205)
-      }}
-      circleColorOff={colors.grey2}
-      circleColorOn="#DB147F"
-      backgroundColorOn={colors.grey2}
-=======
         width: 35,
         height: 20,
         borderRadius: 25,
@@ -41,7 +26,6 @@ export default function SW() {
       circleColorOff="white"
       circleColorOn="white"
       backgroundColorOn="#DB147F"
->>>>>>> feature/centres-screen_rating
     />
   );
 }
