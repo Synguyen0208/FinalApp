@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Dimensions, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import ModalBottom from '../component/ModalBottom';
+import ModalBottom from '../components/ModalBottom';
 import { View, StyleSheet, Text } from 'react-native';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { getDatabase, ref, onValue, set, remove } from 'firebase/database';
 import { RadioButton } from 'react-native-paper';
 import AnimatedLoader from 'react-native-animated-loader';
-import CentresHeader from '../component/CentresHeader';
-import Searchbar from '../component/SearchBar';
-import CardCentre from '../component/CardCentre';
-import CardTotal from '../component/CardTotal';
+import CentresHeader from '../components/CentresHeader';
+import Searchbar from '../components/SearchBar';
+import CardCentre from '../components/cards/CardCentre';
+import CardTotal from '../components/cards/CardTotal';
 import { TouchableNativeFeedback } from 'react-native';
-import Line from '../component/Line';
+import Line from '../components/Line';
 function CentreScreen({ navigation, route }) {
   const [value, setValue] = useState();
   const [visible, setVisible] = useState(false);
@@ -78,7 +77,7 @@ function CentreScreen({ navigation, route }) {
             style={{
               width: 30,
             }}
-            source={require('../assets/ic-filter.png')}
+            source={require('../../assets/ic-filter.png')}
           />
         </View>
       </View>

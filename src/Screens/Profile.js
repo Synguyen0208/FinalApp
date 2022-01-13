@@ -12,6 +12,7 @@ function Profile() {
             const { name, right } = e;
             return (
               <View
+                key={index}
                 style={[
                   styles.row,
                   index !== ProfileScreenData.firstTab.length - 1
@@ -41,6 +42,7 @@ function Profile() {
             const { name, right } = e;
             return (
               <View
+                key={index}
                 style={[
                   styles.row,
                   index !== ProfileScreenData.canterTab.length - 1
@@ -48,7 +50,7 @@ function Profile() {
                     : null,
                 ]}
               >
-                <Text style={{width:"70%"}}>{name}</Text>
+                <Text style={{ width: '70%' }}>{name}</Text>
                 <Text style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
                   <FontAwesome
                     name="long-arrow-right"

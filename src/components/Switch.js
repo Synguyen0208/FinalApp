@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Switch } from 'react-native';
 import SwitchToggle from 'react-native-switch-toggle';
-import { colors } from '../global/styles';
 
 export default function SW() {
   const [isEnabled, setIsEnabled] = useState(false);

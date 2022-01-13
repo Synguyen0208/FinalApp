@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 import { Text } from 'react-native';
 import { View } from 'react-native';
 import { Card, withBadge } from 'react-native-elements';
-import Line from '../../component/Line';
+import Line from '../../components/Line';
 import SwitchToggle from 'react-native-switch-toggle';
 import { TouchableOpacity } from 'react-native';
-import ModalBottom from '../../component/ModalBottom';
+import ModalBottom from '../../components/ModalBottom';
 export default function Marketing() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);

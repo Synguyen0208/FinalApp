@@ -1,7 +1,7 @@
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import Btn from '../component/Button';
+import Btn from '../components/Button';
 import { withBadge } from 'react-native-elements';
 
 export default function CentresHeader(props) {

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { Card } from 'react-native-elements/dist/card/Card';
 import { FontAwesome } from '@expo/vector-icons';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import Space from './Space';
+import Space from '../Space';
 import { Text } from 'react-native';
 import { Image } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native';

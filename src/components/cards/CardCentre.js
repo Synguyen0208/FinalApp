@@ -1,6 +1,6 @@
 import { Text, Card, Icon, withBadge } from 'react-native-elements';
 import { StyleSheet, View } from 'react-native';
-import { colors, parameters } from '../global/styles';
+import { colors, parameters } from '../../global/styles';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native-elements/dist/image/Image';
 export default function CardCentre(props) {

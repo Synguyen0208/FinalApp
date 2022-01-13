@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import React from 'react';
-import { SignInContextProvider } from './Context/authContext';
-import Main from './Navigations/Main';
+import { SignInContextProvider } from './src/Context/authContext';
+import Main from './src/Navigations/Main';
 import { StatusBar } from 'react-native';
 
 export default function App() {

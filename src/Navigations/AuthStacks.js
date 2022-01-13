@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LoginScreen from '../Screens/LoginScreen';
-import SignUpScreen from '../Screens/SignUpScreen';
+import LoginScreen from '../Screens/AuthScreen/LoginScreen';
+import ForgotPasswordScreen from '../Screens/AuthScreen/ForgorPassword';
 const AuthStack = createStackNavigator();
 
 const AuthStackScreen = ({ navigation }) => (
@@ -20,13 +20,6 @@ const AuthStackScreen = ({ navigation }) => (
     <AuthStack.Screen
       name="Login"
       component={LoginScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <AuthStack.Screen
-      name="SignUp"
-      component={SignUpScreen}
       options={{
         headerShown: false,
       }}

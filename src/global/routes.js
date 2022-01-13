@@ -1,10 +1,10 @@
-import Features from '../Screens/CentreDetail/Features';
-import Hours from '../Screens/CentreDetail/Hours';
-import Marketing from '../Screens/CentreDetail/Marketing';
-import RatingAndReview from '../Screens/CentreDetail/RatingAndReview';
-import Service from '../Screens/CentreDetail/Service';
-import Summary from '../Screens/CentreDetail/Summary';
-import UserInformation from '../Screens/CentreDetail/UserInformation';
+import Features from '../Screens/CentreDetailScreens/Features';
+import Hours from '../Screens/CentreDetailScreens/Hours';
+import Marketing from '../Screens/CentreDetailScreens/Marketing';
+import RatingAndReview from '../Screens/CentreDetailScreens/RatingAndReview';
+import Service from '../Screens/CentreDetailScreens/Service';
+import Summary from '../Screens/CentreDetailScreens/Summary';
+import UserInformation from '../Screens/CentreDetailScreens/UserInformation';
 
 export const CentreDetailTab = [
   {

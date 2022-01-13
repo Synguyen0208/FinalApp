@@ -3,11 +3,11 @@ import { Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native';
 import { Text } from 'react-native';
 import { View } from 'react-native';
-import Btn from '../../component/Button';
-import CardComment from '../../component/CardComment';
-import { Rating, AirbnbRating } from 'react-native-ratings';
-import CarDropdown from '../../component/CarDropdown';
-import Line from '../../component/Line';
+import Btn from '../../components/Button';
+import CardComment from '../../components/cards/CardComment';
+import { Rating } from 'react-native-ratings';
+import CarDropdown from '../../components/cards/CarDropdown';
+import Line from '../../components/Line';
 export default function RatingAndReview() {
   const listImage = [
     'https://luatvn.vn/wp-content/uploads/2021/01/quy-dinh-do-tuoi-di-nha-tre.png',
@@ -23,7 +23,7 @@ export default function RatingAndReview() {
           titleIcon={
             <Image
               style={{ width: 39, height: 39 }}
-              source={require('../../assets/kindicare.png')}
+              source={require('../../../assets/kindicare.png')}
             />
           }
           mainTitle="Kindicare Rating"

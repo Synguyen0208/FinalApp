@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SW from '../component/Switch';
+import SW from '../components/Switch';
 
 const ProfileScreenData = {
   firstTab: [

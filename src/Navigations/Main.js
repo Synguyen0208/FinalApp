@@ -5,7 +5,7 @@ import { SignInContext } from '../Context/authContext';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthStackScreen from './AuthStacks';
 import HomeTab from './HomeTab';
-import ForgotPasswordScreen from '../Screens/login/ForgorPassword';
+import ForgotPasswordScreen from '../Screens/AuthScreen/ForgorPassword';
 
 const MainStack = createStackNavigator();
 export default function Main() {
@@ -18,7 +18,8 @@ export default function Main() {
           component={AuthStackScreen}
           options={{
             headerShown: false,
-          }}/>
+          }}
+        />
         <MainStack.Screen
           name="MainScreen"
           component={HomeTab}
@@ -26,7 +27,7 @@ export default function Main() {
             headerShown: false,
           }}
         />
-        
+
         <MainStack.Screen
           name="ForgotScreen"
           component={ForgotPasswordScreen}

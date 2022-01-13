@@ -1,8 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/Ionicons';
 import CentreScreen from '../Screens/CentreScreen';
-import { Text } from 'react-native';
 import AddCentreScreen from '../Screens/AddCentreScreen';
 import CentreDetailStack from './CentreDetailStack';
 const CentreStacks = createStackNavigator();

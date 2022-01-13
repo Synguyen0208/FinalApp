@@ -1,13 +1,12 @@
-
 import { Image, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
-import Btn from '../component/Button';
+import Btn from '../../components/Button';
 import { useState, useContext } from 'react';
-import { SignInContext } from '../Context/authContext';
+import { SignInContext } from '../../Context/authContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import AnimatedLoader from 'react-native-animated-loader';
-import { auth } from '../firebase';
+import { auth } from '../../../firebase';
 import { ScrollView } from 'react-native';
-import { AntDesign,Feather } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function LoginScreen({ navigation }) {
@@ -34,16 +33,16 @@ export default function LoginScreen({ navigation }) {
       }
     } catch (error) {
       Alert.alert(error.name, error.message);
+      setVisible(false);
     }
   };
-
   return (
     <View style={styles.container}>
       <AnimatedLoader
         visible={visible}
         overlayColor="rgba(255,255,255,0.75)"
         animationStyle={styles.lottie}
-        source={require('../global/loader.json')}
+        source={require('../../global/loader.json')}
         speed={1}
       >
         <Text>Loading...</Text>
@@ -54,42 +53,41 @@ export default function LoginScreen({ navigation }) {
       >
         <View style={styles.content}>
           <View style={{ alignItems: 'center' }}>
-              <View style={styles.checkView}>
-                  
-                  <AntDesign name="checkcircle" size={40} color="#27C754" />
-              </View>
+            <View style={styles.checkView}>
+              <AntDesign name="checkcircle" size={40} color="#27C754" />
+            </View>
           </View>
-        
-        
-          <View style={styles.divider}>
-            
-          </View>
+          <View style={styles.divider}></View>
           <View style={styles.form}>
             <View style={styles.input}>
-              <Text   style={styles.textInputTitle}>  Email</Text>
+              <Text style={styles.textInputTitle}> Email</Text>
               <TextInput
                 style={styles.textInput}
                 value={email}
-                autoCapitalize={false}
                 onChangeText={setEmail}
                 placeholder=" Enter your email"
               />
             </View>
             <View style={styles.input}>
-              <Text>  Password</Text>
+              <Text> Password</Text>
               <View style={styles.inputPass}>
                 <TextInput
                   style={styles.textInput}
                   value={password}
                   onChangeText={setPassword}
-                  secureTextEntry={hidenpassword ? true:false}
+                  secureTextEntry={hidenpassword ? true : false}
                   placeholder=" Enter your password"
                 />
-                <TouchableOpacity onPress={()=>setHidenPassword(!hidenpassword)}>
-                  {hidenpassword?<Feather name="eye-off" size={20} color="black" />:<Feather name="eye" size={20} color="black" />}
+                <TouchableOpacity
+                  onPress={() => setHidenPassword(!hidenpassword)}
+                >
+                  {hidenpassword ? (
+                    <Feather name="eye-off" size={20} color="black" />
+                  ) : (
+                    <Feather name="eye" size={20} color="black" />
+                  )}
                 </TouchableOpacity>
               </View>
-              
             </View>
           </View>
           <View
@@ -98,11 +96,11 @@ export default function LoginScreen({ navigation }) {
               marginTop: 10,
             }}
           >
-          <TouchableOpacity onPress={()=>navigation.navigate('ForgotScreen')}> 
-          <Text style={styles.textForgor}>
-            Forgot password?</Text>
-          </TouchableOpacity>
-         
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ForgotScreen')}
+            >
+              <Text style={styles.textForgor}>Forgot password?</Text>
+            </TouchableOpacity>
           </View>
           <Btn
             text="Login"
@@ -110,16 +108,15 @@ export default function LoginScreen({ navigation }) {
             onPress={onSubmit}
             style={styles.btnLogin}
           />
-          <View style={styles.divider}>
-
-          </View>
-          
+          <View style={styles.divider}></View>
           <View style={styles.textFooter}>
-            
             <Text style={styles.txt}>
               If you have trouble logging in to KindiCare CRM,
             </Text>
-            <Text style={{color:'#DB147F',marginTop:'1%'}}> please contact our Customer Care team.</Text>
+            <Text style={{ color: '#DB147F', marginTop: '1%' }}>
+              {' '}
+              please contact our Customer Care team.
+            </Text>
           </View>
         </View>
       </ScrollView>
@@ -139,14 +136,14 @@ const styles = StyleSheet.create({
     height: 150,
     alignContent: 'center',
   },
-  checkView:{
-    backgroundColor:'#92E2A952',
-    height:90,
-    width:90,
-    borderRadius:100,
-    justifyContent:'center',
-    alignItems:'center',
-    marginBottom:'10%'
+  checkView: {
+    backgroundColor: '#92E2A952',
+    height: 90,
+    width: 90,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '10%',
   },
   content: {
     width: '90%',
@@ -156,9 +153,9 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     textAlign: 'center',
     fontSize: 15,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
- 
+
   btnLogin: {
     backgroundColor: '#DB147F',
     padding: 15,
@@ -181,26 +178,26 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 5,
-    borderWidth:1,
-    borderColor:'#d9d5d4',
-    borderRadius:10,
-    marginBottom:'5%'
+    borderWidth: 1,
+    borderColor: '#d9d5d4',
+    borderRadius: 10,
+    marginBottom: '5%',
   },
-  inputPass:{
-    flexDirection:'row',
-    width:'90%'
+  inputPass: {
+    flexDirection: 'row',
+    width: '90%',
   },
-  textForgor:{
-   textAlign: 'right',
-   color:'#DB147F'
+  textForgor: {
+    textAlign: 'right',
+    color: '#DB147F',
   },
   textFooter: {
-    marginTop:'50%',
+    marginTop: '50%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   txt: {
-    color:'black',
+    color: 'black',
     textAlign: 'center',
     margin: 2,
     fontSize: 15,

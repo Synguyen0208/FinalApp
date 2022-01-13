@@ -1,7 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Text } from 'react-native';
 import MoreScreen from '../Screens/MoreScreen';
 import Profile from '../Screens/Profile';
 
@@ -14,11 +12,7 @@ const MoreStack = ({ navigation }) => (
     }}
   >
     <MoreStacks.Screen name="More" component={MoreScreen} />
-    <MoreStacks.Screen
-      name="UserProfile"
-      initialParams={navigation}
-      component={Profile}
-    />
+    <MoreStacks.Screen name="UserProfile" component={Profile} />
   </MoreStacks.Navigator>
 );
 export default MoreStack;
