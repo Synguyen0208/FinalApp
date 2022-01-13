@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
@@ -19,8 +19,9 @@ const HomeTabs = createBottomTabNavigator();
 const HomeTab = ({ route }) => {
   return (
     <HomeTabs.Navigator
-      tabBarOptions={{
-        activeTintColor: colors.buttons,
+      screenOptions={{
+        tabBarActiveTintColor: colors.buttons,
+        tabBarStyle: [{ display: "flex" }, null],
       }}
     >
       <HomeTabs.Screen
@@ -31,20 +32,20 @@ const HomeTab = ({ route }) => {
           tabBarLabel: ({ color, size, focused }) => (
             <Text
               style={{
-                color: focused ? '#000000' : colors.grey2,
+                color: focused ? "#DB147F" : colors.grey2,
                 fontSize: 15,
-                fontWeight: focused ? 'bold' : 'normal',
+                fontWeight: focused ? "bold" : "normal",
               }}
             >
               Dashboard
             </Text>
           ),
-          tabBarColor: '#fff',
+          tabBarColor: "#fff",
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
               name="home"
               type="material"
-              color={focused ? '#FF0000' : colors.grey2}
+              color={focused ? "#DB147F" : colors.grey2}
               size={size}
             />
           ),
@@ -58,9 +59,9 @@ const HomeTab = ({ route }) => {
           tabBarLabel: ({ color, size, focused }) => (
             <Text
               style={{
-                color: focused ? '#000000' : colors.grey2,
+                color: focused ? "#DB147F" : colors.grey2,
                 fontSize: 15,
-                fontWeight: focused ? 'bold' : 'normal',
+                fontWeight: focused ? "bold" : "normal",
               }}
             >
               Plant
@@ -70,7 +71,7 @@ const HomeTab = ({ route }) => {
             <FontAwesome
               name="wrench"
               size={size}
-              color={focused ? '#FF0000' : colors.grey2}
+              color={focused ? "#DB147F" : colors.grey2}
             />
           ),
         }}
@@ -83,9 +84,9 @@ const HomeTab = ({ route }) => {
           tabBarLabel: ({ color, size, focused }) => (
             <Text
               style={{
-                color: focused ? '#000000' : colors.grey2,
+                color: focused ? "#DB147F" : colors.grey2,
                 fontSize: 15,
-                fontWeight: focused ? 'bold' : 'normal',
+                fontWeight: focused ? "bold" : "normal",
               }}
             >
               Centres
@@ -94,8 +95,8 @@ const HomeTab = ({ route }) => {
           tabBarIcon: ({ color, size, focused }) => (
             <FontAwesome5
               name="store"
-              size={size}
-              color={focused ? '#DB147F' : colors.grey2}
+              size={10}
+              color={focused ? "#DB147F" : colors.grey2}
             />
           ),
         }}
@@ -108,9 +109,9 @@ const HomeTab = ({ route }) => {
           tabBarLabel: ({ color, size, focused }) => (
             <Text
               style={{
-                color: focused ? '#000000' : colors.grey2,
+                color: focused ? "#DB147F" : colors.grey2,
                 fontSize: 15,
-                fontWeight: focused ? 'bold' : 'normal',
+                fontWeight: focused ? "bold" : "normal",
               }}
             >
               Link
@@ -120,7 +121,7 @@ const HomeTab = ({ route }) => {
             <FontAwesome
               name="link"
               size={size}
-              color={focused ? '#FF0000' : colors.grey2}
+              color={focused ? "#DB147F" : colors.grey2}
             />
           ),
         }}
@@ -137,9 +138,9 @@ const HomeTab = ({ route }) => {
           tabBarLabel: ({ color, size, focused }) => (
             <Text
               style={{
-                color: focused ? '#000000' : colors.grey2,
+                color: focused ? "#DB147F" : colors.grey2,
                 fontSize: 15,
-                fontWeight: focused ? 'bold' : 'normal',
+                fontWeight: focused ? "bold" : "normal",
               }}
             >
               More
@@ -149,7 +150,7 @@ const HomeTab = ({ route }) => {
             <FontAwesome
               name="ellipsis-h"
               size={size}
-              color={focused ? '#FF0000' : colors.grey2}
+              color={focused ? "#DB147F" : colors.grey2}
             />
           ),
         }}
