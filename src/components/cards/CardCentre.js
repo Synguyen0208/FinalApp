@@ -1,106 +1,54 @@
-import { Text, Card, Icon, withBadge } from 'react-native-elements';
+import { Text, Card } from 'react-native-elements';
 import { StyleSheet, View } from 'react-native';
-import { colors, parameters } from '../../global/styles';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { colors } from '../../global/styles';
 import { Image } from 'react-native-elements/dist/image/Image';
+import RowIcon from '../RowIcon';
 export default function CardCentre(props) {
-  const BadgeIcon = withBadge(0)(Icon);
   const { image, name, location, children, waitlist, type, service } =
     props.data;
   return (
     <Card containerStyle={styles.container}>
       <View>
         <Card.Image
-          style={styles.image}
+          style={styles.cardImage}
           source={{
             uri: image,
           }}
         />
-        <View
-          style={{
-            position: 'absolute',
-            width: 54,
-            alignSelf: 'flex-end',
-            right: 12,
-          }}
-        >
+        <View style={styles.abImageView}>
           <Image
-            style={{ width: 54, height: 26, marginTop: 42 }}
+            style={styles.image}
             source={{
               uri: 'https://www.esb.sa.gov.au/sites/default/files/news-images/exceeding_72_rgb.jpg',
             }}
           />
         </View>
         <View style={styles.rating}>
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>9.8</Text>
+          <Text style={styles.scoreRating}>9.8</Text>
         </View>
       </View>
       <View style={{ padding: 15 }}>
         <Text style={styles.title} numberOfLines={2}>
           {name}
         </Text>
-        <View style={[styles.row]}>
-          <FontAwesome
-            name="map-marker"
-            size={20}
-            style={{
-              color: colors.grey4,
-              marginRight: 10,
-            }}
-          />
-
-          <Text style={styles.description}>{location}</Text>
-        </View>
+        <RowIcon icon="map-marker" text={location} />
         <View style={styles.row}>
-          <View style={[{ width: '50%' }, styles.row, styles.line]}>
-            <FontAwesome5
-              name="baby"
-              size={20}
-              style={{
-                color: colors.grey4,
-                marginRight: 10,
-              }}
-            />
-
-            <Text style={styles.description}>{children}</Text>
-          </View>
-
-          <View style={[{ width: '50%' }, styles.row]}>
-            <FontAwesome5
-              name="clipboard-list"
-              size={20}
-              style={{
-                color: colors.grey4,
-                marginRight: 10,
-              }}
-            />
-
-            <Text style={styles.description}>{waitlist}</Text>
-          </View>
-          <View style={[{ width: '50%' }, styles.row]}>
-            <FontAwesome5
-              name="stethoscope"
-              size={20}
-              style={{
-                color: colors.grey4,
-                marginRight: 10,
-              }}
-            />
-
-            <Text style={styles.description}>{type}</Text>
-          </View>
-          <View style={[{ width: '50%' }, styles.row]}>
-            <FontAwesome5
-              name="hand-holding-medical"
-              size={20}
-              style={{
-                color: colors.grey4,
-                marginRight: 10,
-              }}
-            />
-
-            <Text style={styles.description}>{service}</Text>
-          </View>
+          <RowIcon
+            icon="baby"
+            text={children}
+            style={[{ width: '50%' }, styles.line]}
+          />
+          <RowIcon
+            icon="clipboard-list"
+            text={waitlist}
+            style={[{ width: '50%' }]}
+          />
+          <RowIcon icon="stethoscope" text={type} style={[{ width: '50%' }]} />
+          <RowIcon
+            icon="hand-holding-medical"
+            text={service}
+            style={[{ width: '50%' }]}
+          />
         </View>
       </View>
     </Card>
@@ -124,10 +72,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
   },
-  description: {
-    color: 'black',
-    fontSize: 16,
-  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -136,7 +80,7 @@ const styles = StyleSheet.create({
   line: {
     marginTop: 20,
   },
-  image: {
+  cardImage: {
     width: '100%',
     height: 80,
     borderTopLeftRadius: 10,
@@ -148,5 +92,24 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     borderRadius: 5,
+  },
+  abImageView: {
+    position: 'absolute',
+    width: 54,
+    alignSelf: 'flex-end',
+    right: 12,
+  },
+  image: {
+    width: 54,
+    height: 26,
+    marginTop: 42,
+  },
+  scoreRating: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  icon: {
+    color: colors.grey4,
+    marginRight: 10,
   },
 });

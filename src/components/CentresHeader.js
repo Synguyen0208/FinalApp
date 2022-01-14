@@ -21,7 +21,7 @@ export default function CentresHeader(props) {
           <Btn
             onPress={onFilterPress}
             text={
-              <View style={{ flexDirection: 'row' }}>
+              <View style={styles.row}>
                 <View
                   style={{
                     justifyContent: 'center',
@@ -41,7 +41,7 @@ export default function CentresHeader(props) {
             }
           />
         </View>
-        <View style={{ justifyContent: 'center' }}>
+        <View>
           <FontAwesome
             onPress={() => {
               navigation.navigate('AddCentre', navigation);

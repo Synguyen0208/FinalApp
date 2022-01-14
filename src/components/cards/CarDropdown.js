@@ -13,8 +13,8 @@ export default function CarDropdown(props) {
         {titleIcon != undefined && !hide && (
           <View style={{ marginRight: 10 }}>{titleIcon}</View>
         )}
-        <View style={{ justifyContent: 'center' }}>
-          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{mainTitle}</Text>
+        <View>
+          <Text style={styles.mainTitle}>{mainTitle}</Text>
           {open == false && <Text>{subTitle}</Text>}
         </View>
         <TouchableOpacity
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   cardTitile: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginBottom: 15,
   },
 
   title: {
@@ -76,5 +75,9 @@ const styles = StyleSheet.create({
   cardContent: {
     alignItems: 'center',
     width: '100%',
+  },
+  mainTitle: {
+    fontSize: 17,
+    fontWeight: 'bold',
   },
 });

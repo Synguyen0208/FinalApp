@@ -46,13 +46,7 @@ export default function ModalBottom(props) {
                 />
               )}
             </View>
-            <Divider
-              style={{
-                width: '100%',
-                marginBottom: 20,
-                height: 10,
-              }}
-            />
+            <Divider style={styles.divider} />
             {children}
           </View>
         </View>
@@ -98,5 +92,10 @@ const styles = StyleSheet.create({
     width: '90%',
     fontSize: 25,
     color: 'black',
+  },
+  divider: {
+    width: '100%',
+    marginBottom: 20,
+    height: 10,
   },
 });

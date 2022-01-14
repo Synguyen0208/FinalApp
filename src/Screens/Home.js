@@ -1,8 +1,14 @@
 import { View, StatusBar, StyleSheet, Text, ScrollView } from 'react-native';
-import { Foundation, Entypo, Fontisto } from '@expo/vector-icons';
+import {
+  Foundation,
+  Entypo,
+  Fontisto,
+  MaterialIcons,
+  Ionicons,
+} from '@expo/vector-icons';
 import ItemDashboard from '../components/ItemDashboard';
-
-function Home({ navigation, route }) {
+import { TouchableOpacity } from 'react-native';
+function Home() {
   return (
     <View style={styles.container}>
       <StatusBar
@@ -10,6 +16,25 @@ function Home({ navigation, route }) {
         barStyle="light-content"
         backgroundColor="#DB147F"
       />
+      <View style={styles.header}>
+        <View style={styles.viewIn}>
+          <View style={styles.viewLeft}>
+            <Entypo name="shop" size={24} color="white" />
+            <TouchableOpacity style={styles.dropView}>
+              <Text style={styles.txtHeader}>Goodstart Early Learning ABC</Text>
+              <MaterialIcons
+                name="keyboard-arrow-down"
+                size={24}
+                color="white"
+              />
+            </TouchableOpacity>
+          </View>
+          <Ionicons name="notifications-outline" size={24} color="white" />
+          <View style={styles.numberView}>
+            <Text style={styles.numberText}>5</Text>
+          </View>
+        </View>
+      </View>
       <ScrollView style={styles.itemView}>
         <ItemDashboard
           title={'Applications'}
@@ -61,15 +86,58 @@ const styles = StyleSheet.create({
   itemView: {
     padding: 20,
     borderRadius: 20,
-    top: -50,
+    marginTop: -50,
     zIndex: 1,
     width: '100%',
+    marginBottom: 20,
   },
   item: {
-    // height:'60%',
     padding: 10,
     marginBottom: 20,
     borderRadius: 20,
     backgroundColor: 'white',
+  },
+  viewIn: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginLeft: '5%',
+    marginRight: '5%',
+  },
+  viewLeft: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  dropView: {
+    marginLeft: 10,
+    flexDirection: 'row',
+  },
+  numberView: {
+    backgroundColor: 'red',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 100,
+    width: 15,
+    height: 15,
+    position: 'absolute',
+    right: 0,
+    alignItems: 'center',
+  },
+  numberText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 9,
+  },
+  header: {
+    width: '100%',
+    height: 120,
+    backgroundColor: '#DB147F',
+    borderBottomLeftRadius: 15,
+    justifyContent: 'center',
+    borderBottomRightRadius: 15,
+    padding: 20,
+  },
+  txtHeader: {
+    fontSize: 16,
+    color: 'white',
   },
 });
