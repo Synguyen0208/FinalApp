@@ -1,17 +1,10 @@
 import React from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
-import {
-  Feather,
-  MaterialCommunityIcons,
-  FontAwesome5,
-} from "react-native-vector-icons";
 
 const UserInformation = () => {
   return (
