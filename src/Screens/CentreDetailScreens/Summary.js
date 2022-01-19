@@ -186,7 +186,8 @@ export default Summary = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
+    padding: 5,
+    backgroundColor: "#E5E5E5"
   },
   row: {
     flexDirection: "row",

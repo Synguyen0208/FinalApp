@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 
 const UserInformation = () => {
   return (
@@ -49,7 +44,6 @@ const UserInformation = () => {
           <Text style={[styles.text, styles.label]}>LGA</Text>
           <Text style={[styles.text, styles.detailText]}>Melbourne</Text>
         </View>
-
       </View>
     </ScrollView>
   );
@@ -60,7 +54,8 @@ export default UserInformation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
+    padding: 5,
+    backgroundColor: "#E5E5E5",
   },
   row: {
     flexDirection: "row",
@@ -104,6 +99,6 @@ const styles = StyleSheet.create({
   detailText: {
     color: "#2D1F21",
     fontWeight: "700",
-    width: "60%"
+    width: "60%",
   },
 });
