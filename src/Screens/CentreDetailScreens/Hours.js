@@ -20,7 +20,8 @@ export default Hours;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     backgroundColor: "#E5E5E5",
   },
   title: {
