@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import SwitchToggle from 'react-native-switch-toggle';
 
-export default function SW() {
-  const [isEnabled, setIsEnabled] = useState(false);
+export default function SW({defaultStatus = false}) {
+  const [isEnabled, setIsEnabled] = useState(defaultStatus);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   return (
     <SwitchToggle
