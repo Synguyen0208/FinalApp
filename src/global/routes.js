@@ -2,7 +2,7 @@ import Features from '../Screens/CentreDetailScreens/Features';
 import Hours from '../Screens/CentreDetailScreens/Hours';
 import Marketing from '../Screens/CentreDetailScreens/Marketing';
 import RatingAndReview from '../Screens/CentreDetailScreens/RatingAndReview';
-import Service from '../Screens/CentreDetailScreens/Service';
+import Services from '../Screens/CentreDetailScreens/Services';
 import Summary from '../Screens/CentreDetailScreens/Summary';
 import UserInformation from '../Screens/CentreDetailScreens/UserInformation';
 
@@ -23,8 +23,8 @@ export const CentreDetailTab = [
     component: Hours,
   },
   {
-    name: 'Service',
-    component: Service,
+    name: 'Services',
+    component: Services,
   },
   {
     name: 'Feature',
