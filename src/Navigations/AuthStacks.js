@@ -24,6 +24,11 @@ const AuthStackScreen = ({ navigation }) => (
         headerShown: false,
       }}
     />
+    <AuthStack.Screen
+      name="ForgotScreen"
+      component={ForgotPasswordScreen}
+      options={{ title: null }}
+    />
   </AuthStack.Navigator>
 );
 export default AuthStackScreen;

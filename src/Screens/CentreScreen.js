@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, Image } from 'react-native';
-import ModalBottom from '../components/ModalBottom';
+import { Image } from 'react-native';
 import { View, StyleSheet, Text } from 'react-native';
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { getDatabase, ref, onValue, set, remove } from 'firebase/database';
-import { RadioButton } from 'react-native-paper';
 import AnimatedLoader from 'react-native-animated-loader';
 import CentresHeader from '../components/CentresHeader';
 import Searchbar from '../components/SearchBar';
@@ -13,19 +10,50 @@ import CardCentre from '../components/cards/CardCentre';
 import CardTotal from '../components/cards/CardTotal';
 import { TouchableNativeFeedback } from 'react-native';
 import Line from '../components/Line';
-function CentreScreen({ navigation, route }) {
-  const [value, setValue] = useState();
+import FilterRow from '../components/FilterRow';
+import BottomModal from '../components/BottomModal';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { changeData, changeDetail } from '../global/actions/centreData';
+function CentreScreen(props) {
+  // console.log(props);
+  const { changeDetailCentre } = props.actions;
+  const { navigation } = props;
+  const [filterData, setFilterData] = useState(null);
+  const [data, setData] = useState(null);
+  const [valueName, setValueName] = useState('');
+  const [valueCentre, setValueCentre] = useState('');
   const [visible, setVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [checked, setChecked] = React.useState('first');
-  function updateSearch(value) {
-    setValue(value);
-  }
+  const [checked, setChecked] = React.useState('All Centre');
+  const toggleBottomNavigationView = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const updateSearchName = (value) => {
+    setValueName(value);
+  };
+  const updateSearchCentre = (value) => {
+    setValueCentre(value);
+  };
   useEffect(async () => {
+    setVisible(true);
+    setTimeout(() => {
+      const { data: value } = props;
+      setData(value.data);
+    }, 1000);
     setVisible(false);
   }, [navigation]);
+
+  const setFilter = (value) => {
+    setModalVisible(false);
+    if (value == 'All Centre') {
+      setFilterData(null);
+    } else {
+      setFilterData(value);
+    }
+  };
   return (
-    // <ScrollView>
     <View style={styles.container}>
       <AnimatedLoader
         visible={visible}
@@ -53,26 +81,13 @@ function CentreScreen({ navigation, route }) {
       </View>
       <View style={[styles.row, styles.contain]}>
         <Searchbar
-          value={value}
-          updateSearch={updateSearch}
+          value={valueCentre}
+          updateSearch={updateSearchCentre}
           textSearch="Search Centre name"
-          style={{
-            flex: 2,
-            marginRight: 10,
-            // justifyContent: 'center',
-          }}
+          style={styles.search}
         />
 
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 50,
-            width: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 6,
-          }}
-        >
+        <View style={styles.imageView}>
           <Image
             style={{
               width: 30,
@@ -83,209 +98,98 @@ function CentreScreen({ navigation, route }) {
       </View>
       <Line height={5} />
       <ScrollView contentContainerStyle={styles.contain}>
-        <TouchableNativeFeedback
-          onPress={() => {
-            navigation.navigate('CentreDetail');
-          }}
-        >
-          <View style={{ width: '100%' }}>
-            <CardCentre
-              data={{
-                image:
-                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
-                name: 'Castle Hill Montessori Academyq',
-                location: '1 Kerrs Road, Castle Hill, NSW 2154',
-                waitlist: '48 waitlisted',
-                type: 'KindiCare Basic',
-                service: '4 services',
-                children: '90 childrens',
-              }}
-            />
-          </View>
-        </TouchableNativeFeedback>
-
-        <TouchableNativeFeedback
-          onPress={() => {
-            navigation.navigate('CentreDetail');
-          }}
-        >
-          <View style={{ width: '100%' }}>
-            <CardCentre
-              data={{
-                image:
-                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
-                name: 'Castle Hill Montessori Academyq',
-                location: '1 Kerrs Road, Castle Hill, NSW 2154',
-                waitlist: '48 waitlisted',
-                type: 'KindiCare Basic',
-                service: '4 services',
-                children: '90 childrens',
-              }}
-            />
-          </View>
-        </TouchableNativeFeedback>
-
-        <TouchableNativeFeedback
-          onPress={() => {
-            navigation.navigate('CentreDetail');
-          }}
-        >
-          <View style={{ width: '100%' }}>
-            <CardCentre
-              data={{
-                image:
-                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
-                name: 'Castle Hill Montessori Academyq',
-                location: '1 Kerrs Road, Castle Hill, NSW 2154',
-                waitlist: '48 waitlisted',
-                type: 'KindiCare Basic',
-                service: '4 services',
-                children: '90 childrens',
-              }}
-            />
-          </View>
-        </TouchableNativeFeedback>
-
-        <TouchableNativeFeedback
-          onPress={() => {
-            navigation.navigate('CentreDetail');
-          }}
-        >
-          <View style={{ width: '100%' }}>
-            <CardCentre
-              data={{
-                image:
-                  'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
-                name: 'Castle Hill Montessori Academy',
-                location: '1 Kerrs Road, Castle Hill, NSW 2154',
-                waitlist: '48 waitlisted',
-                type: 'KindiCare Basic',
-                service: '4 services',
-                children: '90 childrens',
-              }}
-            />
-          </View>
-        </TouchableNativeFeedback>
+        {data &&
+          filterData == null &&
+          data.map((e, index) => {
+            if (e.sumary.name.indexOf(valueCentre) > -1)
+              return (
+                <TouchableNativeFeedback
+                  key={index}
+                  onPress={async () => {
+                    await changeDetailCentre(e);
+                    navigation.navigate('CentreDetail', e);
+                  }}
+                >
+                  <View key={index} style={{ width: '100%' }}>
+                    <CardCentre data={e} key={index} />
+                  </View>
+                </TouchableNativeFeedback>
+              );
+            if (index == data.length - 1) return <Text>No data found</Text>;
+          })}
+        {filterData && (
+          <TouchableNativeFeedback
+            onPress={() => {
+              navigation.navigate('CentreDetail', filterData);
+            }}
+          >
+            <View style={{ width: '100%' }}>
+              <CardCentre data={filterData} />
+            </View>
+          </TouchableNativeFeedback>
+        )}
       </ScrollView>
-      <ModalBottom
-        setModalVisible={setModalVisible}
-        modalVisible={modalVisible}
-        title="Select Centres"
-        closeIcon={true}
-        height={629}
+      <BottomModal
+        visible={modalVisible}
+        onBackButtonPress={toggleBottomNavigationView}
+        onBackdropPress={toggleBottomNavigationView}
+        title="Select Centre"
       >
         <Searchbar
-          style={{
-            borderWidth: 2,
-            borderColor: '#D3CCCC',
-            borderRadius: 8,
-          }}
+          style={styles.searchbar}
           textSearch="Search centre name"
+          updateSearch={updateSearchName}
+          value={valueName}
         />
+
         <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
-          <View style={[styles.row, styles.line]}>
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <Image
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 50 / 2,
-                }}
-                source={{
-                  uri: 'https://www.goodstart.org.au/getattachment/88459773-12e8-4f2b-918f-a71f11c3e4b2/;.aspx;.jpg',
-                }}
-              />
-            </View>
-            <Text style={{ flex: 4, fontSize: 20 }}>All Centre</Text>
-            <RadioButton
-              value="first"
-              status={checked === 'first' ? 'checked' : 'unchecked'}
-              onPress={() => setChecked('first')}
-              color="#DB147F"
-            />
-          </View>
+          <FilterRow
+            image="https://www.goodstart.org.au/getattachment/88459773-12e8-4f2b-918f-a71f11c3e4b2/;.aspx;.jpg"
+            checked={checked}
+            setChecked={setChecked}
+            setFilter={setFilter}
+            name="All Centre"
+          />
+          {data &&
+            data.map((e, index) => {
+              const { name, image } = e.sumary;
+              if (name.indexOf(valueName) > -1)
+                return (
+                  <FilterRow
+                    image={image}
+                    checked={checked}
+                    setChecked={setChecked}
+                    setFilter={setFilter}
+                    name={name}
+                    key={index}
+                    data={e}
+                  />
+                );
+            })}
         </ScrollView>
-      </ModalBottom>
+      </BottomModal>
     </View>
-    // </ScrollView>
   );
 }
+const mapStateToProps = (state) => ({
+  data: state.data,
+  detail: state.detail,
+});
 
-export default CentreScreen;
+const ActionCreators = Object.assign({
+  changeDetailCentre: changeDetail,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(CentreScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#bdc6cf',
-    // justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-  },
-  form_group: {
-    width: '100%',
-    justifyContent: 'flex-start',
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 15,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: '#000000AA',
-    // height: 629,
-    // backgroundColor: 'white',
-  },
-  modalView: {
-    width: '100%',
-    backgroundColor: 'white',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    padding: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    height: 629,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  textInput: {
-    width: '100%',
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  form_row: {
-    flexDirection: 'row',
-    marginBottom: 10,
   },
   lottie: {
     width: 100,
@@ -308,5 +212,22 @@ const styles = StyleSheet.create({
   },
   line: {
     marginTop: 30,
+  },
+  searchbar: {
+    borderWidth: 2,
+    borderColor: '#D3CCCC',
+    borderRadius: 8,
+  },
+  search: {
+    flex: 2,
+    marginRight: 10,
+  },
+  imageView: {
+    backgroundColor: 'white',
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 6,
   },
 });

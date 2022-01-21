@@ -4,11 +4,12 @@ import { colors } from '../../global/styles';
 import { Image } from 'react-native-elements/dist/image/Image';
 import RowIcon from '../RowIcon';
 export default function CardCentre(props) {
-  const { image, name, location, children, waitlist, type, service } =
-    props.data;
+  const { image, name, address, children, type, key } = props.data.sumary;
+  const service = props.data.services.length;
+  const waitlist = props.data.features.length;
   return (
-    <Card containerStyle={styles.container}>
-      <View>
+    <Card containerStyle={styles.container} key={key}>
+      <View key={key}>
         <Card.Image
           style={styles.cardImage}
           source={{
@@ -31,22 +32,22 @@ export default function CardCentre(props) {
         <Text style={styles.title} numberOfLines={2}>
           {name}
         </Text>
-        <RowIcon icon="map-marker" text={location} />
+        <RowIcon icon="map-marker" text={address} />
         <View style={styles.row}>
           <RowIcon
             icon="baby"
-            text={children}
+            text={`${children} childrens`}
             style={[{ width: '50%' }, styles.line]}
           />
           <RowIcon
             icon="clipboard-list"
-            text={waitlist}
+            text={`${waitlist} waitlisted`}
             style={[{ width: '50%' }]}
           />
           <RowIcon icon="stethoscope" text={type} style={[{ width: '50%' }]} />
           <RowIcon
             icon="hand-holding-medical"
-            text={service}
+            text={`${service} services`}
             style={[{ width: '50%' }]}
           />
         </View>
@@ -61,11 +62,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 10,
     marginTop: 10,
-  },
-  price: {
-    color: '#ff8c52',
-    marginTop: 10,
-    flex: 2,
   },
   title: {
     fontWeight: 'bold',

@@ -1,38 +1,54 @@
-import { Image, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Alert } from 'react-native';
 import Btn from '../../components/Button';
-import { useState, useContext } from 'react';
-import { SignInContext } from '../../Context/authContext';
+import { useContext, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import AnimatedLoader from 'react-native-animated-loader';
 import { auth } from '../../../firebase';
 import { ScrollView } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
-
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SignInContext } from '../../Context/authContext';
 export default function LoginScreen({ navigation }) {
-  const [visible, setVisible] = useState(false);
   const { dispatchSignedIn } = useContext(SignInContext);
+  const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [hidenpassword, setHidenPassword] = useState(true);
-
+  const [errors, setErrors] = useState('');
+  const checkError = (err) => {
+    switch (err) {
+      case 'auth/missing-email':
+        setErrors('Email is required');
+        break;
+      case 'auth/invalid-email':
+        setErrors('Invalid email');
+        break;
+      case 'auth/internal-error':
+        setErrors('Password is required');
+        break;
+      case 'auth/user-not-found':
+        setErrors('User not found');
+        break;
+      case 'auth/wrong-password':
+        setErrors('Incorrect password');
+        break;
+      default:
+        break;
+    }
+  };
   const onSubmit = async () => {
     setVisible(true);
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       if (user) {
+        setVisible(false);
         dispatchSignedIn({
           type: 'UPDATE_SIGN_IN',
-          payload: { userToken: user },
-        });
-        setVisible(false);
-        navigation.navigate('MainScreen', {
-          email: email,
-          password: password,
+          payload: { userToken: 'signed-in' },
         });
       }
     } catch (error) {
-      Alert.alert(error.name, error.message);
+      checkError(error.code);
       setVisible(false);
     }
   };
@@ -41,8 +57,7 @@ export default function LoginScreen({ navigation }) {
       <AnimatedLoader
         visible={visible}
         overlayColor="rgba(255,255,255,0.75)"
-        animationStyle={styles.lottie}
-        source={require('../../global/loader.json')}
+        animationStyle="#DB147F"
         speed={1}
       >
         <Text>Loading...</Text>
@@ -89,6 +104,7 @@ export default function LoginScreen({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
+            <Text style={styles.err}>{errors}</Text>
           </View>
           <View
             style={{
@@ -205,5 +221,9 @@ const styles = StyleSheet.create({
   lottie: {
     width: 100,
     height: 100,
+  },
+  err: {
+    color: 'red',
+    paddingLeft: 10,
   },
 });

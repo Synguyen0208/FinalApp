@@ -10,7 +10,7 @@ export default function CentresHeader(props) {
   const BadgeIcon = withBadge(FontAwesome5);
   return (
     <View style={styles.header}>
-      <View style={[styles.row, { width: '100%' }]}>
+      <View style={[styles.row]}>
         <View style={[styles.row1]}>
           <FontAwesome5
             style={{ padding: 10 }}
@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
   },
   row1: {
     flexDirection: 'row',

@@ -1,17 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { colors } from '../global/styles';
-import { Icon } from 'react-native-elements';
 import { Text } from 'react-native';
 import HomeStackScreen from './HomeStacks';
 import CentreStack from './CentreStack';
 import MoreStack from './MoreStack';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { changeData } from '../global/actions/centreData';
+import { getDatabase, onValue, ref } from 'firebase/database';
 const HomeTabs = createBottomTabNavigator();
 
-const HomeTab = ({ route }) => {
+const HomeTab = (props) => {
+  const { actions } = props;
+  useEffect(async () => {
+    setTimeout(() => {
+      getData();
+    }, 1000);
+  }, []);
+
+  const getData = async () => {
+    try {
+      const db = getDatabase();
+      const reference = await ref(db, `Centres`);
+      onValue(reference, (snapshot) => {
+        actions.changeData(snapshot.val());
+      });
+    } catch (error) {}
+  };
   return (
     <HomeTabs.Navigator
       screenOptions={{
@@ -102,4 +120,15 @@ const HomeTab = ({ route }) => {
     </HomeTabs.Navigator>
   );
 };
-export default HomeTab;
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+
+const ActionCreators = Object.assign({ changeData: changeData });
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeTab);

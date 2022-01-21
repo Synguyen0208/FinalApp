@@ -3,7 +3,8 @@ import React from 'react';
 import { SignInContextProvider } from './src/Context/authContext';
 import Main from './src/Navigations/Main';
 import { StatusBar } from 'react-native';
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 export default function App() {
   return (
     <SignInContextProvider>

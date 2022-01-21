@@ -22,7 +22,7 @@ export default function Searchbar({ value, updateSearch, style, textSearch }) {
         </View>
 
         <TextInput
-          value={query}
+          value={value}
           placeholder={textSearch}
           style={styles.textInput}
           onChangeText={(text) => {
@@ -36,7 +36,10 @@ export default function Searchbar({ value, updateSearch, style, textSearch }) {
           }}
         />
         {query ? (
-          <TouchableOpacity onPress={() => setQuery('')} style={styles.vwClear}>
+          <TouchableOpacity
+            onPress={() => updateSearch('')}
+            style={styles.vwClear}
+          >
             <Image
               style={styles.icClear}
               source={require('../../assets/ic_clear.png')}

@@ -3,7 +3,22 @@ import { View, StyleSheet, Text } from 'react-native';
 import { ProfileScreenData } from './ScreenData';
 import { colors } from '../global/styles';
 import { ScrollView } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { SignInContext } from '../Context/authContext';
+import { useContext } from 'react';
 function Profile() {
+  const { dispatchSignedIn } = useContext(SignInContext);
+  const Logout = async () => {
+    try {
+      await signOut(auth);
+      dispatchSignedIn({
+        type: 'UPDATE_SIGN_IN',
+        payload: { userToken: null },
+      });
+    } catch {}
+  };
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -65,7 +80,9 @@ function Profile() {
         </View>
       </ScrollView>
       <View style={[styles.row, { padding: 20, backgroundColor: 'white' }]}>
-        <Text>Logout</Text>
+        <TouchableOpacity onPress={Logout}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
         <Text style={{ marginLeft: 'auto', fontWeight: 'bold' }}>
           <FontAwesome
             name="sign-out"

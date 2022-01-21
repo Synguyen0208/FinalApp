@@ -11,6 +11,11 @@ import {
   ScrollView,
 } from "react-native";
 import { Feather, MaterialCommunityIcons, FontAwesome5 } from "react-native-vector-icons";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { changeData, changeDetail } from '../../global/actions/centreData';
+
+
 
 const { UIManager } = NativeModules;
 
@@ -23,6 +28,8 @@ export default Summary = () => {
   const _start = () => {
     LayoutAnimation.spring();
   };
+function Summary(props) {
+  const { detail: value } = props;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
@@ -300,3 +307,18 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+}
+const mapStateToProps = (state) => ({
+  data: state.data,
+  detail: state.detail,
+});
+
+const ActionCreators = Object.assign({
+  changeData: changeData,
+  changeDetailCentre: changeDetail,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Summary);

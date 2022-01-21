@@ -1,47 +1,34 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useContext } from 'react';
-import { SignInContext } from '../Context/authContext';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useContext, useEffect, useState } from 'react';
 import AuthStackScreen from './AuthStacks';
 import HomeTab from './HomeTab';
-import ForgotPasswordScreen from '../Screens/AuthScreen/ForgorPassword';
+import { auth } from '../../firebase';
+import { SignInContext } from '../Context/authContext';
+import { Provider } from 'react-redux';
+import configureStore from '../global/root/store/configureStore';
 
-const MainStack = createStackNavigator();
 export default function Main() {
-  const { signedIn } = useContext(SignInContext);
+  const { signedIn, dispatchSignedIn } = useContext(SignInContext);
+  const store = configureStore();
+  useEffect(() => {
+    try {
+      const user = auth.currentUser.toJSON();
+      let type = null;
+      if (user) {
+        type = 'signed-in';
+      }
+      dispatchSignedIn({
+        type: 'UPDATE_SIGN_IN',
+        payload: { userToken: type },
+      });
+    } catch {}
+  }, []);
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="LoginScreen">
-        <MainStack.Screen
-          name="LoginScreen"
-          component={AuthStackScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <MainStack.Screen
-          name="MainScreen"
-          component={HomeTab}
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        <MainStack.Screen
-          name="ForgotScreen"
-          component={ForgotPasswordScreen}
-          options={{ title: null }}
-        />
-      </MainStack.Navigator>
+      <Provider store={store}>
+        {signedIn.userToken === null ? <AuthStackScreen /> : <HomeTab />}
+      </Provider>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-});

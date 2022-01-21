@@ -2,11 +2,18 @@ import { View, StyleSheet, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { colors } from '../global/styles';
 import { SignInContext } from '../Context/authContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TouchableNativeFeedback } from 'react-native';
+import { auth } from '../../firebase';
 function MoreScreen({ navigation }) {
-  const { signedIn } = useContext(SignInContext);
-  const { email } = signedIn.userToken.user;
+  const [account, setAccount] = useState(null);
+  useEffect(() => {
+    try {
+      const user = auth.currentUser.toJSON();
+      setAccount(user);
+    } catch {}
+  }, []);
+  const email = account ? account.email : 'admin@gmail.com';
   return (
     <View style={styles.container}>
       <TouchableNativeFeedback
