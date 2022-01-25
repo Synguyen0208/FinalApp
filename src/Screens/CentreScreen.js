@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeData, changeDetail } from '../global/actions/centreData';
 function CentreScreen(props) {
-  // console.log(props);
   const { changeDetailCentre } = props.actions;
   const { navigation } = props;
   const [filterData, setFilterData] = useState(null);
@@ -106,8 +105,9 @@ function CentreScreen(props) {
                 <TouchableNativeFeedback
                   key={index}
                   onPress={async () => {
-                    await changeDetailCentre(e);
-                    navigation.navigate('CentreDetail', e);
+                    await changeDetailCentre(index);
+
+                    navigation.navigate('CentreDetail');
                   }}
                 >
                   <View key={index} style={{ width: '100%' }}>
@@ -119,8 +119,9 @@ function CentreScreen(props) {
           })}
         {filterData && (
           <TouchableNativeFeedback
-            onPress={() => {
-              navigation.navigate('CentreDetail', filterData);
+            onPress={async () => {
+              await changeDetailCentre(filterData.id - 1);
+              navigation.navigate('CentreDetail');
             }}
           >
             <View style={{ width: '100%' }}>

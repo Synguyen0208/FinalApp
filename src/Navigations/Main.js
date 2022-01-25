@@ -3,31 +3,50 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import AuthStackScreen from './AuthStacks';
 import HomeTab from './HomeTab';
-import { auth } from '../../firebase';
-import { SignInContext } from '../Context/authContext';
 import { Provider } from 'react-redux';
 import configureStore from '../global/root/store/configureStore';
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
+import { View } from 'react-native';
+import { Text } from 'react-native';
+import { SignInContext } from '../Context/authContext';
 
 export default function Main() {
-  const { signedIn, dispatchSignedIn } = useContext(SignInContext);
+  const { signedIn } = useContext(SignInContext);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const getToken = async () => {
+    try {
+      setLoading(true);
+      const token = await AsyncStorageLib.getItem('token');
+      setToken(token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   const store = configureStore();
   useEffect(() => {
-    try {
-      const user = auth.currentUser.toJSON();
-      let type = null;
-      if (user) {
-        type = 'signed-in';
-      }
-      dispatchSignedIn({
-        type: 'UPDATE_SIGN_IN',
-        payload: { userToken: type },
-      });
-    } catch {}
+    getToken();
   }, []);
   return (
     <NavigationContainer>
       <Provider store={store}>
-        {signedIn.userToken === null ? <AuthStackScreen /> : <HomeTab />}
+        {loading ? (
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'gray',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text>Loading</Text>
+          </View>
+        ) : token === null ? (
+          <AuthStackScreen />
+        ) : (
+          <HomeTab />
+        )}
       </Provider>
     </NavigationContainer>
   );

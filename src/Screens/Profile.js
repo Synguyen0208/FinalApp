@@ -6,18 +6,11 @@ import { ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
-import { SignInContext } from '../Context/authContext';
-import { useContext } from 'react';
-function Profile() {
-  const { dispatchSignedIn } = useContext(SignInContext);
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
+function Profile({ navigation }) {
   const Logout = async () => {
-    try {
-      await signOut(auth);
-      dispatchSignedIn({
-        type: 'UPDATE_SIGN_IN',
-        payload: { userToken: null },
-      });
-    } catch {}
+    await signOut(auth);
+    AsyncStorageLib.removeItem('token');
   };
   return (
     <View style={styles.container}>

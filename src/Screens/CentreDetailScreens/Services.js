@@ -1,50 +1,31 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 
-import ServiceCard from "../../components/ServiceCard";
-
-const serviceList = [
-  {
-    id: 1,
-    nameService: "Long Day Care",
-    time: "0 to 12 months",
-    price: 112,
-    type: "children",
-  },
-  {
-    id: 2,
-    nameService: "Pre-School/ Kindergarten",
-    time: "0 to 12 months",
-    price: 112,
-    type: "pre-school",
-  },
-  {
-    id: 3,
-    nameService: "Before & After School Care",
-    time: "0 to 12 months",
-    price: 112,
-    type: "school",
-  },
-  {
-    id: 4,
-    nameService: "Family Day Care",
-    time: "0 to 12 months",
-    price: 112,
-    type: "family",
-  },
-  {
-    id: 5,
-    nameService: "Vocation Care",
-    time: "0 to 12 months",
-    price: 112,
-    type: "vocation",
-  },
-];
-
-const Services = () => {
+import ServiceCard from '../../components/ServiceCard';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { changeData, changeDetail } from '../../global/actions/centreData';
+import { getDatabase, onValue, ref } from 'firebase/database';
+const Services = (props) => {
+  const { detail: value } = props;
+  const [dataDetail, setDataDetail] = useState(null);
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const id = value.detail;
+    try {
+      const db = getDatabase();
+      const reference = await ref(db, `Centres/${id}`);
+      onValue(reference, (snapshot) => {
+        setDataDetail(snapshot.val());
+      });
+    } catch (error) {}
+  };
+  const serviceList = dataDetail ? dataDetail.services : null;
   return (
     <View style={styles.container}>
-      {serviceList ? (
+      {dataDetail ? (
         <FlatList
           data={serviceList}
           renderItem={({ item, index }) => (
@@ -59,13 +40,26 @@ const Services = () => {
   );
 };
 
-export default Services;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 5,
     paddingHorizontal: 20,
-    backgroundColor: "#E5E5E5",
+    backgroundColor: '#E5E5E5',
   },
 });
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+  detail: state.detail,
+});
+
+const ActionCreators = Object.assign({
+  changeData: changeData,
+  changeDetailCentre: changeDetail,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Services);

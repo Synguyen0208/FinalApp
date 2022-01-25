@@ -1,4 +1,5 @@
-import React from "react";
+import { getDatabase, onValue, ref } from 'firebase/database';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -9,27 +10,45 @@ import {
   NativeModules,
   LayoutAnimation,
   ScrollView,
-} from "react-native";
-import { Feather, MaterialCommunityIcons, FontAwesome5 } from "react-native-vector-icons";
+} from 'react-native';
+import {
+  Feather,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from 'react-native-vector-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeData, changeDetail } from '../../global/actions/centreData';
-
-
 
 const { UIManager } = NativeModules;
 
 UIManager.setLayoutAnimationEnabledExperimental &&
   UIManager.setLayoutAnimationEnabledExperimental(true);
 
-export default Summary = () => {
-  const [seeMore, setSeeMore] = React.useState(false);
+function Summary(props) {
+  const { detail: value } = props;
+  const [dataDetail, setDataDetail] = useState(null);
+  const [seeMore, setSeeMore] = useState(false);
 
   const _start = () => {
     LayoutAnimation.spring();
   };
-function Summary(props) {
-  const { detail: value } = props;
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const id = value.detail;
+    try {
+      const db = getDatabase();
+      const reference = await ref(db, `Centres/${id}`);
+      onValue(reference, (snapshot) => {
+        setDataDetail(snapshot.val());
+      });
+    } catch (error) {}
+  };
+  const { name, address, short_description, outdoor, calendar, type } =
+    dataDetail ? dataDetail.sumary : {};
+  const { email, link, phone } = dataDetail ? dataDetail.sumary.contact : {};
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
@@ -37,12 +56,12 @@ function Summary(props) {
           <Image
             style={styles.image}
             source={{
-              uri: "https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg",
+              uri: 'https://www.goodstart.org.au/getattachment/ae42faab-2813-4587-80af-763fa8e743bc/;.aspx;.jpg',
             }}
           />
 
           <View style={styles.cartTitle}>
-            <Text style={styles.title}>Goodstart Early Learing ABC</Text>
+            <Text style={styles.title}>{name}</Text>
             <Text style={[styles.status, styles.active]}>● Active</Text>
           </View>
 
@@ -78,9 +97,7 @@ function Summary(props) {
                 name="map-marker-outline"
                 style={styles.generalIcon}
               />
-              <Text style={styles.text}>
-                221 Ferras Street, South Melbourne, VIC 3205
-              </Text>
+              <Text style={styles.text}>{address}</Text>
             </View>
 
             <View style={[styles.row]}>
@@ -88,12 +105,12 @@ function Summary(props) {
                 name="storefront-outline"
                 style={styles.generalIcon}
               />
-              <Text style={styles.text}>Goodstart Early Learning</Text>
+              <Text style={styles.text}>{short_description}</Text>
             </View>
 
             <View style={[styles.row]}>
               <MaterialCommunityIcons name="door" style={styles.generalIcon} />
-              <Text style={styles.text}>Centre-based Care</Text>
+              <Text style={styles.text}>{outdoor}</Text>
             </View>
 
             <View style={[styles.row]}>
@@ -101,17 +118,15 @@ function Summary(props) {
                 name="calendar-blank-outline"
                 style={styles.generalIcon}
               />
-              <Text style={styles.text}>01 January 2012</Text>
+              <Text style={styles.text}>{calendar}</Text>
             </View>
 
             <View style={[styles.row]}>
               <Image
                 style={styles.generalIconImage}
-                source={require("../../../assets/kindicare.png")}
+                source={require('../../../assets/kindicare.png')}
               />
-              <Text style={[styles.text, styles.specialText]}>
-                KindiCare Basic
-              </Text>
+              <Text style={[styles.text, styles.specialText]}>{type}</Text>
             </View>
 
             <View style={styles.line} />
@@ -120,19 +135,17 @@ function Summary(props) {
 
             <View style={[styles.row]}>
               <Feather name="phone" style={styles.generalIcon} />
-              <Text style={styles.text}>1300 001 154</Text>
+              <Text style={styles.text}>{phone}</Text>
             </View>
 
             <View style={[styles.row]}>
               <Feather name="mail" style={styles.generalIcon} />
-              <Text style={styles.text}>goodstartearlylearning@gmail.com</Text>
+              <Text style={styles.text}>{email}</Text>
             </View>
 
             <View style={[styles.row]}>
               <Feather name="arrow-up-left" style={styles.generalIcon} />
-              <Text style={[styles.text, styles.link]}>
-                https://www.goodstart.org.au/
-              </Text>
+              <Text style={[styles.text, styles.link]}>{link}</Text>
             </View>
           </View>
         )}
@@ -188,93 +201,93 @@ function Summary(props) {
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
-    backgroundColor: "#E5E5E5"
+    backgroundColor: '#E5E5E5',
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginVertical: 5,
-    alignItems: "center",
+    alignItems: 'center',
   },
   justifyContent: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 12,
-    borderColor: "#F2F0F0",
+    borderColor: '#F2F0F0',
     borderWidth: 1,
     padding: 10,
     marginVertical: 10,
   },
   cartTitle: {
-    width: "60%",
+    width: '60%',
     padding: 12,
   },
   title: {
-    color: "#2D1F21",
+    color: '#2D1F21',
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: '700',
     marginVertical: 5,
   },
   image: {
-    height: Math.round(Dimensions.get("screen").height / 7),
-    width: Math.round(Dimensions.get("screen").height / 7),
+    height: Math.round(Dimensions.get('screen').height / 7),
+    width: Math.round(Dimensions.get('screen').height / 7),
     borderRadius: 8,
   },
   seeMoreBtn: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   seeMoreIcon: {
     fontSize: 24,
-    color: "#32A4FC",
+    color: '#32A4FC',
   },
   status: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   active: {
-    color: "#36BF57",
+    color: '#36BF57',
   },
   inactive: {
-    color: "#ACB2B8",
+    color: '#ACB2B8',
   },
   line: {
     height: 1,
-    width: "100%",
-    backgroundColor: "#F2F0F0",
+    width: '100%',
+    backgroundColor: '#F2F0F0',
     marginVertical: 10,
   },
   generalIcon: {
     fontSize: 22,
-    color: "#DB147F",
+    color: '#DB147F',
   },
   generalIconImage: {
     height: 23,
     width: 23,
   },
   text: {
-    color: "#171725",
+    color: '#171725',
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: "400",
+    fontWeight: '400',
     paddingHorizontal: 20,
   },
   link: {
-    color: "#DB147F",
+    color: '#DB147F',
   },
   specialText: {
-    color: "#32A4FC",
-    backgroundColor: "#E9F4FF",
+    color: '#32A4FC',
+    backgroundColor: '#E9F4FF',
     fontSize: 14,
     lineHeight: 24,
-    fontWeight: "600",
+    fontWeight: '600',
     marginHorizontal: 20,
     paddingHorizontal: 4,
     paddingVertical: 8,
@@ -286,28 +299,28 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   pinkColor: {
-    color: "#DB147F",
-    backgroundColor: "#FFF0FB",
+    color: '#DB147F',
+    backgroundColor: '#FFF0FB',
   },
   blueColor: {
-    color: "#32A4FC",
-    backgroundColor: "#E9F4FF",
+    color: '#32A4FC',
+    backgroundColor: '#E9F4FF',
   },
   greenColor: {
-    color: "#36BF57",
-    backgroundColor: "#EDF9F0",
+    color: '#36BF57',
+    backgroundColor: '#EDF9F0',
   },
   purpleColor: {
-    color: "#BF2CF3",
-    backgroundColor: "#F3EAFF",
+    color: '#BF2CF3',
+    backgroundColor: '#F3EAFF',
   },
   number: {
-    color: "#2D1F21",
+    color: '#2D1F21',
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 });
-}
+
 const mapStateToProps = (state) => ({
   data: state.data,
   detail: state.detail,

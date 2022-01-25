@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native';
 import { View } from 'react-native';
@@ -7,45 +7,79 @@ import Line from '../../components/Line';
 import SwitchToggle from 'react-native-switch-toggle';
 import { TouchableOpacity } from 'react-native';
 import ModalBottom from '../../components/ModalBottom';
-export default function Marketing() {
+import { changeData, changeDetail } from '../../global/actions/centreData';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getDatabase, onValue, ref, update } from 'firebase/database';
+function Marketing(props) {
+  const { detail: value } = props;
+  const id = value.detail;
+  const [dataDetail, setDataDetail] = useState(null);
   const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = async (index, status) => {
+    const url = `Centres/${id}/marketing/${index}`;
+    const db = getDatabase();
+    const reference = await ref(db, url);
+    update(reference, {
+      status: status == 'on' ? 'off' : 'on',
+    });
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    try {
+      const db = getDatabase();
+      const reference = await ref(db, `Centres/${id}/marketing`);
+      onValue(reference, (snapshot) => {
+        setDataDetail(snapshot.val());
+      });
+    } catch (error) {}
+  };
   return (
     <View>
-      <Card containerStyle={{ borderRadius: 10 }}>
-        <View style={styles.cardTitile}>
-          <View style={{ justifyContent: 'center' }}>
-            <View style={styles.row}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
-                Featured Listing
-              </Text>
-              <TouchableOpacity
-                style={styles.bageIcon}
-                onPress={() => setModalVisible(true)}
-              >
-                <Text style={{ marginTop: -4 }}>i</Text>
-              </TouchableOpacity>
-            </View>
+      {dataDetail &&
+        dataDetail.map((e, index) => {
+          const { name, price, status, description } = e;
+          return (
+            <Card containerStyle={{ borderRadius: 10 }}>
+              <View style={styles.cardTitile}>
+                <View style={{ justifyContent: 'center' }}>
+                  <View style={styles.row}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+                      {name}
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.bageIcon}
+                      onPress={() => setModalVisible(true)}
+                    >
+                      <Text style={{ marginTop: -4 }}>i</Text>
+                    </TouchableOpacity>
+                  </View>
 
-            <Line height={10} />
-            <Text>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>$50</Text>/Per
-              month
-            </Text>
-          </View>
-          <SwitchToggle
-            switchOn={isEnabled}
-            onPress={toggleSwitch}
-            containerStyle={styles.swContainerStyle}
-            circleStyle={styles.swCircleStyle}
-            rightContainerStyle={{ margin: 10 }}
-            circleColorOff="white"
-            circleColorOn="white"
-            backgroundColorOn="#DB147F"
-          />
-        </View>
-      </Card>
+                  <Line height={10} />
+                  <Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                      ${price}
+                    </Text>
+                    /Per month
+                  </Text>
+                </View>
+                <SwitchToggle
+                  switchOn={status == 'on' ? true : false}
+                  onPress={() => toggleSwitch(index, status)}
+                  containerStyle={styles.swContainerStyle}
+                  circleStyle={styles.swCircleStyle}
+                  rightContainerStyle={{ margin: 10 }}
+                  circleColorOff="white"
+                  circleColorOn="white"
+                  backgroundColorOn="#DB147F"
+                />
+              </View>
+            </Card>
+          );
+        })}
 
       <ModalBottom
         setModalVisible={setModalVisible}
@@ -119,3 +153,17 @@ const styles = StyleSheet.create({
     padding: 2,
   },
 });
+const mapStateToProps = (state) => ({
+  data: state.data,
+  detail: state.detail,
+});
+
+const ActionCreators = Object.assign({
+  changeData: changeData,
+  changeDetailCentre: changeDetail,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Marketing);

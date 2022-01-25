@@ -6,36 +6,22 @@ import { Image } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 export default function ShowListImageRow(props) {
-  const { listImage } = props;
+  const { listImage, openModalImage } = props;
   const [full, setFull] = useState(false);
   return (
     <View style={[styles.listImage, styles.row]}>
       {listImage.map((e, index) => {
         let imageFinal;
-        if (index == 3 && !full && listImage.length != 4) {
+        if (index == 3 && listImage.length != 4) {
           return;
         }
-        if (!full) {
-          if (listImage.length >= 4 && index >= 4) {
-            imageFinal = (
-              <TouchableNativeFeedback onPress={() => setFull(true)}>
-                <View style={styles.imageOp}>
-                  <Text style={styles.textAb}>+{listImage.length - 4}</Text>
-                </View>
-              </TouchableNativeFeedback>
-            );
-          }
-        }
-        if (index == 3) {
-          return (
-            <View
-              style={{ width: '25%', padding: 5, justifyContent: 'center' }}
-              key={index}
-            >
-              <TouchableWithoutFeedback onPress={() => setFull(false)}>
-                <Image style={styles.image} source={{ uri: e }} />
-              </TouchableWithoutFeedback>
-            </View>
+        if (listImage.length >= 4 && index >= 4) {
+          imageFinal = (
+            <TouchableNativeFeedback onPress={() => openModalImage()}>
+              <View style={styles.imageOp}>
+                <Text style={styles.textAb}>+{listImage.length - 4}</Text>
+              </View>
+            </TouchableNativeFeedback>
           );
         }
         return (

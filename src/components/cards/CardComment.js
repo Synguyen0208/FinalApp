@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from 'react-native';
 import { Card } from 'react-native-elements/dist/card/Card';
@@ -7,8 +7,16 @@ import { Rating } from 'react-native-ratings';
 import Space from '../Space';
 import { Text } from 'react-native';
 import ShowListImageRow from '../ShowListImageRow';
+import ImageView from 'react-native-image-viewing';
 export default function CardComment(props) {
-  const { image, name, subTitle, date, comment, listImage, starCount } = props;
+  const images = [];
+  const [visible, setIsVisible] = useState(false);
+  const { image, name, subTitle, date, comment, listImage, starCounts } = props;
+  listImage.map((e) => {
+    images.push({
+      uri: e,
+    });
+  });
   return (
     <Card containerStyle={styles.card} wrapperStyle={styles.wrapperCard}>
       <View style={styles.cardTitile}>
@@ -27,8 +35,8 @@ export default function CardComment(props) {
             <Space width={10} />
             <Rating
               type="custom"
-              ratingCount={starCount}
-              startingValue={5}
+              ratingCount={starCounts}
+              startingValue={6}
               imageSize={20}
               readonly={true}
               ratingColor="#DB147F"
@@ -45,8 +53,17 @@ export default function CardComment(props) {
       </View>
       <View style={styles.cardContent}>
         <Text style={styles.comment}>{comment}</Text>
-        <ShowListImageRow listImage={listImage} />
+        <ShowListImageRow
+          openModalImage={() => setIsVisible(true)}
+          listImage={listImage}
+        />
       </View>
+      <ImageView
+        images={images}
+        imageIndex={0}
+        visible={visible}
+        onRequestClose={() => setIsVisible(false)}
+      />
     </Card>
   );
 }

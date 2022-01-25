@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native';
 import { Text } from 'react-native';
@@ -8,14 +8,27 @@ import CardComment from '../../components/cards/CardComment';
 import { Rating } from 'react-native-ratings';
 import CarDropdown from '../../components/cards/CarDropdown';
 import Line from '../../components/Line';
-export default function RatingAndReview() {
-  const listImage = [
-    'https://luatvn.vn/wp-content/uploads/2021/01/quy-dinh-do-tuoi-di-nha-tre.png',
-    'https://noithatmanhhe.vn/media/20359/be-lam-dau-bep-trong-lop-noi-that-manh-he.jpg?width=700&height=525',
-    'https://media.baodansinh.vn/baodansinh//2021/3/5/img8035-16149166120391816110533.jpg',
-    'https://bebewood.vn/wp-content/uploads/2021/05/goc-van-dong-nha-tre-1-1024x684.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfmcUEfPiGiTwzOboQPdiZX5aLNCTb4klhv2s1MnV_ND6A4XVTY8J7_PaV1rfVu7LBj4s&usqp=CAU',
-  ];
+import { changeData, changeDetail } from '../../global/actions/centreData';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getDatabase, onValue, ref } from 'firebase/database';
+function RatingAndReview(props) {
+  const [dataRating, setDataRating] = useState(null);
+  const { detail: value } = props;
+  const id = value.detail;
+  console.log(id);
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    try {
+      const db = getDatabase();
+      const reference = await ref(db, `evaluate`);
+      onValue(reference, (snapshot) => {
+        setDataRating(snapshot.val());
+      });
+    } catch (error) {}
+  };
   return (
     <View>
       <ScrollView>
@@ -77,7 +90,6 @@ export default function RatingAndReview() {
             good quality of service provided
           </Text>
         </CarDropdown>
-
         <CarDropdown
           mainTitle="User Reviews"
           imageDisnabel={true}
@@ -97,22 +109,31 @@ export default function RatingAndReview() {
           subTitle="4.5/5"
           onPress={() => setRating(rating == 'flex' ? 'none' : 'flex')}
         >
-          <CardComment
-            image={
-              <Image
-                style={{ width: 50, height: 50, borderRadius: 25 }}
-                source={{
-                  uri: 'https://mayanhxachtaynhat.com/wp-content/uploads/2019/12/N%C3%AAn-t%E1%BA%ADp-trung-v%C3%A0o-%C3%A1nh-m%E1%BA%AFt-m%E1%BA%ABu.jpg',
-                }}
-              />
-            }
-            name="Kindicare Rating1"
-            subTitle="Very good"
-            date="July 29, 2020"
-            comment="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."
-            listImage={listImage}
-            starCounts={5}
-          />
+          {dataRating &&
+            dataRating.map((e) => {
+              if (e.centre_id == id + 1) {
+                const { comment, date, email, star, type } = e;
+                const listImage = e['list-image'];
+                return (
+                  <CardComment
+                    image={
+                      <Image
+                        style={{ width: 50, height: 50, borderRadius: 25 }}
+                        source={{
+                          uri: 'https://mayanhxachtaynhat.com/wp-content/uploads/2019/12/N%C3%AAn-t%E1%BA%ADp-trung-v%C3%A0o-%C3%A1nh-m%E1%BA%AFt-m%E1%BA%ABu.jpg',
+                        }}
+                      />
+                    }
+                    name={email}
+                    subTitle={type}
+                    date={date}
+                    comment={comment}
+                    listImage={listImage}
+                    starCounts={star}
+                  />
+                );
+              }
+            })}
         </CarDropdown>
         <CarDropdown
           mainTitle="NQS Rating"
@@ -187,3 +208,17 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+const mapStateToProps = (state) => ({
+  data: state.data,
+  detail: state.detail,
+});
+
+const ActionCreators = Object.assign({
+  changeData: changeData,
+  changeDetailCentre: changeDetail,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(RatingAndReview);

@@ -1,15 +1,14 @@
 import { StyleSheet, Text, TextInput, View, Alert } from 'react-native';
 import Btn from '../../components/Button';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import AnimatedLoader from 'react-native-animated-loader';
 import { auth } from '../../../firebase';
 import { ScrollView } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SignInContext } from '../../Context/authContext';
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
 export default function LoginScreen({ navigation }) {
-  const { dispatchSignedIn } = useContext(SignInContext);
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -40,12 +39,10 @@ export default function LoginScreen({ navigation }) {
     setVisible(true);
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
+      const token = await user.user.getIdToken();
       if (user) {
         setVisible(false);
-        dispatchSignedIn({
-          type: 'UPDATE_SIGN_IN',
-          payload: { userToken: 'signed-in' },
-        });
+        await AsyncStorageLib.setItem('token', token);
       }
     } catch (error) {
       checkError(error.code);
