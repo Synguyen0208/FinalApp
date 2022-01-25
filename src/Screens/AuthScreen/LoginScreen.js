@@ -1,35 +1,38 @@
-import { StyleSheet, Text, TextInput, View, Alert } from 'react-native';
-import Btn from '../../components/Button';
-import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import AnimatedLoader from 'react-native-animated-loader';
-import { auth } from '../../../firebase';
-import { ScrollView } from 'react-native';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorageLib from '@react-native-async-storage/async-storage';
-export default function LoginScreen({ navigation }) {
+import { StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import Btn from "../../components/Button";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import AnimatedLoader from "react-native-animated-loader";
+import { auth } from "../../../firebase";
+import { ScrollView } from "react-native";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
+import { NativeModules } from "react-native"
+
+export default function LoginScreen({ navigation, reloadApp }) {
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [hidenpassword, setHidenPassword] = useState(true);
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
+
   const checkError = (err) => {
     switch (err) {
-      case 'auth/missing-email':
-        setErrors('Email is required');
+      case "auth/missing-email":
+        setErrors("Email is required");
         break;
-      case 'auth/invalid-email':
-        setErrors('Invalid email');
+      case "auth/invalid-email":
+        setErrors("Invalid email");
         break;
-      case 'auth/internal-error':
-        setErrors('Password is required');
+      case "auth/internal-error":
+        setErrors("Password is required");
         break;
-      case 'auth/user-not-found':
-        setErrors('User not found');
+      case "auth/user-not-found":
+        setErrors("User not found");
         break;
-      case 'auth/wrong-password':
-        setErrors('Incorrect password');
+      case "auth/wrong-password":
+        setErrors("Incorrect password");
         break;
       default:
         break;
@@ -42,8 +45,9 @@ export default function LoginScreen({ navigation }) {
       const token = await user.user.getIdToken();
       if (user) {
         setVisible(false);
-        await AsyncStorageLib.setItem('token', token);
+        await AsyncStorageLib.setItem("token", token);
       }
+      NativeModules.DevSettings.reload();
     } catch (error) {
       checkError(error.code);
       setVisible(false);
@@ -60,11 +64,11 @@ export default function LoginScreen({ navigation }) {
         <Text>Loading...</Text>
       </AnimatedLoader>
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.content}>
-          <View style={{ alignItems: 'center' }}>
+          <View style={{ alignItems: "center" }}>
             <View style={styles.checkView}>
               <AntDesign name="checkcircle" size={40} color="#27C754" />
             </View>
@@ -105,12 +109,12 @@ export default function LoginScreen({ navigation }) {
           </View>
           <View
             style={{
-              alignItems: 'flex-end',
+              alignItems: "flex-end",
               marginTop: 10,
             }}
           >
             <TouchableOpacity
-              onPress={() => navigation.navigate('ForgotScreen')}
+              onPress={() => navigation.navigate("ForgotScreen")}
             >
               <Text style={styles.textForgor}>Forgot password?</Text>
             </TouchableOpacity>
@@ -126,8 +130,8 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.txt}>
               If you have trouble logging in to KindiCare CRM,
             </Text>
-            <Text style={{ color: '#DB147F', marginTop: '1%' }}>
-              {' '}
+            <Text style={{ color: "#DB147F", marginTop: "1%" }}>
+              {" "}
               please contact our Customer Care team.
             </Text>
           </View>
@@ -140,78 +144,78 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   logo: {
     width: 150,
     height: 150,
-    alignContent: 'center',
+    alignContent: "center",
   },
   checkView: {
-    backgroundColor: '#92E2A952',
+    backgroundColor: "#92E2A952",
     height: 90,
     width: 90,
     borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '10%',
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "10%",
   },
   content: {
-    width: '90%',
-    margin: '5%',
+    width: "90%",
+    margin: "5%",
   },
   textStyle: {
-    color: '#ffffff',
-    textAlign: 'center',
+    color: "#ffffff",
+    textAlign: "center",
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   btnLogin: {
-    backgroundColor: '#DB147F',
+    backgroundColor: "#DB147F",
     padding: 15,
     borderRadius: 10,
-    width: '100%',
+    width: "100%",
     marginTop: 20,
   },
   divider: {
     margin: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   textInput: {
-    width: '100%',
+    width: "100%",
     padding: 5,
     borderRadius: 5,
   },
   form: {
-    width: '100%',
+    width: "100%",
   },
   input: {
     padding: 5,
     borderWidth: 1,
-    borderColor: '#d9d5d4',
+    borderColor: "#d9d5d4",
     borderRadius: 10,
-    marginBottom: '5%',
+    marginBottom: "5%",
   },
   inputPass: {
-    flexDirection: 'row',
-    width: '90%',
+    flexDirection: "row",
+    width: "90%",
   },
   textForgor: {
-    textAlign: 'right',
-    color: '#DB147F',
+    textAlign: "right",
+    color: "#DB147F",
   },
   textFooter: {
-    marginTop: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: "50%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   txt: {
-    color: 'black',
-    textAlign: 'center',
+    color: "black",
+    textAlign: "center",
     margin: 2,
     fontSize: 15,
   },
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   err: {
-    color: 'red',
+    color: "red",
     paddingLeft: 10,
   },
 });
