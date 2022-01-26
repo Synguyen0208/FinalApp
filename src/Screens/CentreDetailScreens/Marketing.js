@@ -47,9 +47,7 @@ function Marketing(props) {
               <View style={styles.cardTitile}>
                 <View style={{ justifyContent: 'center' }}>
                   <View style={styles.row}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
-                      {name}
-                    </Text>
+                    <Text style={styles.txtName}>{name}</Text>
                     <TouchableOpacity
                       style={styles.bageIcon}
                       onPress={() => setModalVisible(true)}
@@ -60,9 +58,7 @@ function Marketing(props) {
 
                   <Line height={10} />
                   <Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                      ${price}
-                    </Text>
+                    <Text style={styles.txtPrice}>${price}</Text>
                     /Per month
                   </Text>
                 </View>
@@ -151,6 +147,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     padding: 2,
+  },
+  txtPrice: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  txtName: {
+    fontSize: 17,
+    fontWeight: 'bold',
   },
 });
 const mapStateToProps = (state) => ({

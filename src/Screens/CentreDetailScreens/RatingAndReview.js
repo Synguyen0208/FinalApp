@@ -16,7 +16,6 @@ function RatingAndReview(props) {
   const [dataRating, setDataRating] = useState(null);
   const { detail: value } = props;
   const id = value.detail;
-  console.log(id);
   useEffect(() => {
     getData();
   }, []);
@@ -118,7 +117,7 @@ function RatingAndReview(props) {
                   <CardComment
                     image={
                       <Image
-                        style={{ width: 50, height: 50, borderRadius: 25 }}
+                        style={styles.image}
                         source={{
                           uri: 'https://mayanhxachtaynhat.com/wp-content/uploads/2019/12/N%C3%AAn-t%E1%BA%ADp-trung-v%C3%A0o-%C3%A1nh-m%E1%BA%AFt-m%E1%BA%ABu.jpg',
                         }}
@@ -140,7 +139,7 @@ function RatingAndReview(props) {
           imageDisnabel={true}
           titleIcon={
             <Image
-              style={{ width: 39, height: 39 }}
+              style={styles.icon}
               source={{
                 uri: 'https://www.esb.sa.gov.au/sites/default/files/news-images/exceeding_72_rgb.jpg',
               }}
@@ -150,7 +149,7 @@ function RatingAndReview(props) {
           onPress={() => setRating(rating == 'flex' ? 'none' : 'flex')}
         >
           <Image
-            style={{ width: 110, height: 74 }}
+            style={styles.imageRow}
             source={{
               uri: 'https://www.esb.sa.gov.au/sites/default/files/news-images/exceeding_72_rgb.jpg',
             }}
@@ -158,12 +157,8 @@ function RatingAndReview(props) {
           <Text>Last Reviewed 01 December 2019</Text>
           <Line height={20} />
           <View style={styles.row}>
-            <Text style={{ width: '70%', fontSize: 17 }}>
-              1. Education program and practice
-            </Text>
-            <Text style={{ fontSize: 17, color: '#FB8429' }}>
-              Exceeding NQS
-            </Text>
+            <Text style={styles.txt}>1. Education program and practice</Text>
+            <Text style={styles.txtCl}>Exceeding NQS</Text>
           </View>
         </CarDropdown>
       </ScrollView>
@@ -206,6 +201,27 @@ const styles = StyleSheet.create({
     height: 14,
     marginRight: 10,
     borderRadius: 3,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  icon: {
+    width: 39,
+    height: 39,
+  },
+  imageRow: {
+    width: 110,
+    height: 74,
+  },
+  txt: {
+    width: '70%',
+    fontSize: 17,
+  },
+  txtCl: {
+    fontSize: 17,
+    color: '#FB8429',
   },
 });
 const mapStateToProps = (state) => ({

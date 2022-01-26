@@ -19,7 +19,7 @@ export default function FilterRow(props) {
           }}
         />
       </View>
-      <Text style={{ flex: 4, fontSize: 20 }}>{name}</Text>
+      <Text style={styles.txtName}>{name}</Text>
       <RadioButton
         value={name}
         status={checked === name ? 'checked' : 'unchecked'}
@@ -46,5 +46,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50 / 2,
+  },
+  txtName: {
+    flex: 4,
+    fontSize: 20,
   },
 });

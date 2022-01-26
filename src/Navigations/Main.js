@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthStackScreen from './AuthStacks';
 import HomeTab from './HomeTab';
 import { Provider } from 'react-redux';
@@ -8,10 +8,8 @@ import configureStore from '../global/root/store/configureStore';
 import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import { View } from 'react-native';
 import { Text } from 'react-native';
-import { SignInContext } from '../Context/authContext';
 
 export default function Main() {
-  const { signedIn } = useContext(SignInContext);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
   const getToken = async () => {
@@ -32,14 +30,7 @@ export default function Main() {
     <NavigationContainer>
       <Provider store={store}>
         {loading ? (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'gray',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.loading}>
             <Text>Loading</Text>
           </View>
         ) : token === null ? (
@@ -51,3 +42,11 @@ export default function Main() {
     </NavigationContainer>
   );
 }
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

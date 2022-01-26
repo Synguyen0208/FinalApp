@@ -24,7 +24,7 @@ export default function ModalBottom(props) {
     >
       <View style={styles.centeredView}>
         <TouchableNativeFeedback onPress={() => setModalVisible(false)}>
-          <View style={{ flex: 1, width: '100%' }} />
+          <View style={styles.viewTouch} />
         </TouchableNativeFeedback>
         <View style={[styles.modalView, { height: height }]}>
           <View style={styles.modalContainer}>
@@ -97,5 +97,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 20,
     height: 10,
+  },
+  viewTouch: {
+    flex: 1,
+    width: '100%',
   },
 });

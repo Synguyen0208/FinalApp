@@ -20,10 +20,10 @@ export default function CardComment(props) {
   return (
     <Card containerStyle={styles.card} wrapperStyle={styles.wrapperCard}>
       <View style={styles.cardTitile}>
-        <View style={{ padding: 5, marginRight: 10 }}>{image}</View>
+        <View style={styles.image}>{image}</View>
         <View style={{ justifyContent: 'center' }}>
           <View style={styles.row}>
-            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{name}</Text>
+            <Text style={styles.txt}>{name}</Text>
             <Space width={10} />
             <FontAwesome
               name="circle"
@@ -117,5 +117,13 @@ const styles = StyleSheet.create({
   wrapperCard: {
     borderWidth: 1,
     borderColor: 'white',
+  },
+  image: {
+    padding: 5,
+    marginRight: 10,
+  },
+  txt: {
+    fontSize: 17,
+    fontWeight: 'bold',
   },
 });

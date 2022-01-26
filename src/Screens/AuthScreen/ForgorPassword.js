@@ -1,26 +1,25 @@
 import {
-  Image,
   StyleSheet,
   Text,
   TextInput,
   View,
   Modal,
-  Alert,
-  Button,
-  Pressable,
   TouchableOpacity,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useState, useContext } from 'react';
 import Btn from '../../components/Button';
-
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../../firebase';
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState(null);
 
   const [modalhiden, setModalhiden] = useState(false);
 
-  const onSubmit = () => {
-    setModalhiden(true);
+  const onSubmit = async () => {
+    try {
+      await sendPasswordResetEmail(auth, 'syn282002@gmail.com');
+    } catch (error) {}
   };
 
   return (

@@ -25,10 +25,7 @@ export default function ShowListImageRow(props) {
           );
         }
         return (
-          <View
-            style={{ width: '25%', padding: 5, justifyContent: 'center' }}
-            key={index}
-          >
+          <View style={styles.imageView} key={index}>
             <Image style={styles.image} source={{ uri: e }} />
             {imageFinal}
           </View>
@@ -68,5 +65,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 70,
     borderRadius: 8,
+  },
+  imageView: {
+    width: '25%',
+    padding: 5,
+    justifyContent: 'center',
   },
 });
