@@ -72,10 +72,26 @@ function CentreScreen(props) {
           }}
           showsHorizontalScrollIndicator={false}
         >
-          <CardTotal title="Total centres" icon="store" number={200} />
-          <CardTotal title="Total centres" icon="store" number={200} />
-          <CardTotal title="Total centres" icon="store" number={200} />
-          <CardTotal title="Total centres" icon="store" number={200} />
+          <CardTotal
+            title="Total centres"
+            icon="store"
+            number={data ? data.length : 0}
+          />
+          <CardTotal
+            title="Total centres"
+            icon="store"
+            number={data ? data.length : 0}
+          />
+          <CardTotal
+            title="Total centres"
+            icon="store"
+            number={data ? data.length : 0}
+          />
+          <CardTotal
+            title="Total centres"
+            icon="store"
+            number={data ? data.length : 0}
+          />
         </ScrollView>
       </View>
       <View style={[styles.row, styles.contain]}>

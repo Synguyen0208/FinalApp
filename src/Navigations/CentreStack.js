@@ -25,13 +25,7 @@ const CentreStack = ({ navigation }) => (
         headerShown: false,
       }}
     />
-    <CentreStacks.Screen
-      name="AddCentre"
-      component={AddCentreScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
+    <CentreStacks.Screen name="AddCentre" component={AddCentreScreen} />
     <CentreStacks.Screen
       name="CentreDetail"
       component={CentreDetailStack}

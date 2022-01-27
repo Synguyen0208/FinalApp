@@ -46,16 +46,6 @@ function AddCentreScreen(props) {
         'image',
         Platform.OS == 'android' ? result.uri : result.path
       );
-      // const storage = getStorage();
-      // const refI = ref(storage, 'image.jpg');
-
-      // const img = await fetch(result.uri);
-      // const bytes = await img.blob();
-
-      // await uploadBytes(refI, bytes).then(async (e) => {
-      //   const url = await getDownloadURL(refI);
-
-      // });
     }
   };
   const navigationRoute = route.params;
@@ -94,7 +84,7 @@ function AddCentreScreen(props) {
     image: '',
     outdoor: '',
     short_description: '',
-    type: '',
+    type: 'KindiCare Basic',
     phone: '',
     email: '',
     link: '',
@@ -169,7 +159,8 @@ function AddCentreScreen(props) {
     try {
       const db = getDatabase();
       const reference = await ref(db, `Centres/${value.data.length}`);
-      set(reference, dataAdd);
+      await set(reference, dataAdd);
+      navigationRoute.goBack();
     } catch (error) {
       console.log(error.message);
     }
@@ -201,7 +192,7 @@ function AddCentreScreen(props) {
                   style={styles.textinput}
                 ></TextInput>
               </View>
-              {props.touched.nameCentre && props.errors.nameCentre ? (
+              {props.touched.nameCentre ? (
                 <Text style={styles.error}>{props.errors.nameCentre}</Text>
               ) : null}
               <View style={styles.viewRow}>
@@ -461,7 +452,6 @@ function AddCentreScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 1,
     margin: 25,
   },
   viewRow: {

@@ -18,8 +18,10 @@ export default function ForgotPasswordScreen() {
 
   const onSubmit = async () => {
     try {
-      await sendPasswordResetEmail(auth, 'syn282002@gmail.com');
-    } catch (error) {}
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -16,9 +16,7 @@ const HomeTabs = createBottomTabNavigator();
 const HomeTab = (props) => {
   const { actions } = props;
   useEffect(async () => {
-    setTimeout(() => {
-      getData();
-    }, 1000);
+    getData();
   }, []);
 
   const getData = async () => {

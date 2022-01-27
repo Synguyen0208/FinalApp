@@ -3,7 +3,8 @@ import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import React from 'react';
 
 const { width } = Dimensions.get('window');
-export default function CardTotal() {
+export default function CardTotal(props) {
+  const { title, icon, number } = props;
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -13,14 +14,14 @@ export default function CardTotal() {
             onPress={() => {
               setModalVisible(true);
             }}
-            name="store"
+            name={icon}
             size={30}
             color="#DB147F"
           />
-          <Text style={{ fontSize: 15 }}>Total centres</Text>
+          <Text style={{ fontSize: 15 }}>{title}</Text>
         </View>
         <View style={styles.numberView}>
-          <Text style={styles.numberTxt}>200</Text>
+          <Text style={styles.numberTxt}>{number}</Text>
         </View>
       </View>
     </View>

@@ -1,4 +1,5 @@
 import { getDatabase, onValue, ref } from 'firebase/database';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
   Image,
@@ -118,7 +119,9 @@ function Summary(props) {
                 name="calendar-blank-outline"
                 style={styles.generalIcon}
               />
-              <Text style={styles.text}>{calendar}</Text>
+              <Text style={styles.text}>
+                {moment(calendar).format('YYYY-MM-DD')}
+              </Text>
             </View>
 
             <View style={[styles.row]}>
